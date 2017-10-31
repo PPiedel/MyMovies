@@ -1,29 +1,30 @@
-package com.example.pawel_piedel.mymovies.data.source
+package com.example.pawel_piedel.mymovies.data.source.remote
 
 import com.example.pawel_piedel.mymovies.data.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.MoviesResponse
-import com.example.pawel_piedel.mymovies.data.source.remote.RemoteDataSource
+import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
 import io.reactivex.Flowable
 
 /**
  * Created by Pawel_Piedel on 30.10.2017.
  */
-class MoviesRepository(private val remoteDataSource: RemoteDataSource) : MoviesDataSource {
+class RemoteDataSource(private val apiService: ApiService) : MoviesDataSource {
 
     override fun getTopRatedMovies(apiKey: String): Flowable<MoviesResponse> {
-        return remoteDataSource.getTopRatedMovies(apiKey)
+        return apiService.getTopRatedMovies(apiKey)
     }
 
     override fun getUpcomingMovies(apiKey: String): Flowable<MoviesResponse> {
-        return remoteDataSource.getUpcomingMovies(apiKey)
+        return apiService.getUpcomingMovies(apiKey)
     }
 
     override fun getPopularMovies(apiKey: String): Flowable<MoviesResponse> {
-        return remoteDataSource.getPopularMovies(apiKey)
+        return apiService.getPopularMovies(apiKey)
     }
 
     override fun getMovieDetails(id: String, apiKey: String): Flowable<Movie> {
-        return remoteDataSource.getMovieDetails(id, apiKey)
+        return apiService.getMovieDetails(id, apiKey)
     }
+
 
 }
