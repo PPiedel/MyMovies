@@ -17,34 +17,34 @@ import retrofit2.http.Query
  */
 
 interface ApiService {
-    @GET("/movie/{movie_id}")
+    @GET("movie/{movie_id}")
     fun getMovieDetails(@Path(MOVIE_ID_PARAM) id: String,
                         @Query(API_KEY_PARAM) apiKey: String): Flowable<Movie>
 
-    @GET("/movie/{movie_id}/similar")
+    @GET("movie/{movie_id}/similar")
     fun getSimilarMovies(@Path(MOVIE_ID_PARAM) id: String,
                          @Query(API_KEY_PARAM) apiKey: String) : Flowable<MoviesResponse>
 
-    @GET("/movie/{movie_id}/recommendations")
+    @GET("movie/{movie_id}/recommendations")
     fun getRecomendedMovies(@Path(MOVIE_ID_PARAM) id: String,
                             @Query(API_KEY_PARAM) apiKey: String) : Flowable<MoviesResponse>
 
-    @GET("/movie/top_rated")
+    @GET("movie/top_rated")
     fun getTopRatedMovies(@Query(API_KEY_PARAM) apiKey: String): Flowable<MoviesResponse>
 
-    @GET("/movie/upcoming")
+    @GET("movie/upcoming")
     fun getUpcomingMovies(@Query(API_KEY_PARAM) apiKey: String): Flowable<MoviesResponse>
 
-    @GET("/movie/popular")
+    @GET("movie/popular")
     fun getPopularMovies(@Query(API_KEY_PARAM) apiKey: String): Flowable<MoviesResponse>
 
-    @GET("/movie/now_playing")
+    @GET("movie/now_playing")
     fun getNowPlayingMovies(@Query(API_KEY_PARAM) apiKey: String): Flowable<MoviesResponse>
 
     companion object {
         const val API_KEY_PARAM = "api_key"
         const val MOVIE_ID_PARAM = "movie_id"
-        const val BASE_URL = "https://api.themoviedb.org/3"
+        const val BASE_URL = "https://api.themoviedb.org/3/"
     }
 
 

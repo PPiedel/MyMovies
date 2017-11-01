@@ -22,13 +22,17 @@ class MyMoviesApplication : Application() {
     var component: AppComponent
         get() {
             if (appComponent == null) {
-                appComponent = DaggerAppComponent.builder()
-                        .appModule(AppModule(this))
-                        .build()
+                initDagger()
             }
             return appComponent as AppComponent
         }
         set(appComponent) {
             this.appComponent = appComponent
         }
+
+    private fun initDagger() {
+        appComponent = DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build()
+    }
 }

@@ -1,18 +1,15 @@
 package com.example.pawel_piedel.mymovies.injection.component
 
-import android.app.Application
-import android.content.Context
+import com.example.pawel_piedel.mymovies.injection.module.ApiModule
 import com.example.pawel_piedel.mymovies.injection.module.AppModule
+import com.example.pawel_piedel.mymovies.injection.module.DataModule
+import com.example.pawel_piedel.mymovies.injection.module.PresenterModule
+import com.example.pawel_piedel.mymovies.ui.movies.MoviesActivity
 import dagger.Component
-import com.example.pawel_piedel.mymovies.injection.ApplicationContext
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class))
+@Component(modules = arrayOf(AppModule::class, PresenterModule::class, ApiModule::class, DataModule::class))
 interface AppComponent {
-
-    @ApplicationContext
-    fun context(): Context
-
-    fun application(): Application
+    fun inject(moviesActivity: MoviesActivity)
 }

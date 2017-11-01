@@ -4,11 +4,13 @@ import com.example.pawel_piedel.mymovies.data.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.MoviesResponse
 import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
 import io.reactivex.Flowable
+import javax.inject.Inject
 
 /**
  * Created by Pawel_Piedel on 30.10.2017.
  */
-class RemoteDataSource(private val apiService: ApiService) : MoviesDataSource {
+class RemoteDataSource @Inject
+constructor(private val apiService: ApiService) : MoviesDataSource {
 
     override fun getTopRatedMovies(apiKey: String): Flowable<MoviesResponse> {
         return apiService.getTopRatedMovies(apiKey)

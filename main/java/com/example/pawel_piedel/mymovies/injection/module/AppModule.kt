@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import com.example.pawel_piedel.mymovies.injection.ApplicationContext
+import javax.inject.Singleton
 
-@Module(includes = arrayOf(ApiModule::class))
+@Module()
 class AppModule(private val application: Application) {
 
     @Provides
@@ -15,7 +15,7 @@ class AppModule(private val application: Application) {
     }
 
     @Provides
-    @ApplicationContext
+    @Singleton
     internal fun provideContext(): Context {
         return application
     }
