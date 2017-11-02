@@ -19,7 +19,7 @@ class MyMoviesApplication : Application() {
         }
     }
 
-    var component: AppComponent
+    public var component: AppComponent
         get() {
             if (appComponent == null) {
                 initDagger()

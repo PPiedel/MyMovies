@@ -1,8 +1,8 @@
 package com.example.pawel_piedel.mymovies.injection.module
 
 import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
-import com.example.pawel_piedel.mymovies.ui.main.MainContract
-import com.example.pawel_piedel.mymovies.ui.main.MainPresenter
+import com.example.pawel_piedel.mymovies.ui.movies.MoviesContract
+import com.example.pawel_piedel.mymovies.ui.movies.MoviesPresenter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,6 +15,6 @@ class PresenterModule {
 
     @Provides
     @Singleton
-    fun provideMoviesPresenter(moviesDataSource: MoviesDataSource): MainContract.Presenter = MainPresenter(moviesDataSource)
+    fun provideMoviesPresenter(moviesDataSource: MoviesDataSource): MoviesContract.Presenter = MoviesPresenter(moviesDataSource)
 
 }
