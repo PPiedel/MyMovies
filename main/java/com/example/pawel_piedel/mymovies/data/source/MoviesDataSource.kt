@@ -9,11 +9,11 @@ import io.reactivex.Observable
  * Created by Pawel_Piedel on 30.10.2017.
  */
 interface MoviesDataSource {
-    fun getMovieDetails(id: String, apiKey: String) : Flowable<Movie>
+    fun getMovieDetails(id: String) : Flowable<Movie>
 
-    fun getTopRatedMovies(apiKey: String) : Flowable<MoviesResponse>
+    fun getTopRatedMovies() : Flowable<MoviesResponse>
 
-    fun getUpcomingMovies(apiKey: String) : Flowable<MoviesResponse>
+    fun getUpcomingMovies() : Flowable<MoviesResponse>
 
-    fun getPopularMovies(apiKey: String) : Flowable<MoviesResponse>
+    fun getPopularMovies() : Flowable<MoviesResponse>
 }

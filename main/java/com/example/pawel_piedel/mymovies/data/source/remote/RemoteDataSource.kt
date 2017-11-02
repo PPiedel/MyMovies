@@ -12,20 +12,20 @@ import javax.inject.Inject
 class RemoteDataSource @Inject
 constructor(private val apiService: ApiService) : MoviesDataSource {
 
-    override fun getTopRatedMovies(apiKey: String): Flowable<MoviesResponse> {
-        return apiService.getTopRatedMovies(apiKey)
+    override fun getTopRatedMovies(): Flowable<MoviesResponse> {
+        return apiService.getTopRatedMovies()
     }
 
-    override fun getUpcomingMovies(apiKey: String): Flowable<MoviesResponse> {
-        return apiService.getUpcomingMovies(apiKey)
+    override fun getUpcomingMovies(): Flowable<MoviesResponse> {
+        return apiService.getUpcomingMovies()
     }
 
-    override fun getPopularMovies(apiKey: String): Flowable<MoviesResponse> {
-        return apiService.getPopularMovies(apiKey)
+    override fun getPopularMovies(): Flowable<MoviesResponse> {
+        return apiService.getPopularMovies()
     }
 
-    override fun getMovieDetails(id: String, apiKey: String): Flowable<Movie> {
-        return apiService.getMovieDetails(id, apiKey)
+    override fun getMovieDetails(id: String): Flowable<Movie> {
+        return apiService.getMovieDetails(id)
     }
 
 

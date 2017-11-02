@@ -10,20 +10,20 @@ import io.reactivex.Flowable
  */
 class MoviesRepository(private val remoteDataSource: RemoteDataSource) : MoviesDataSource {
 
-    override fun getTopRatedMovies(apiKey: String): Flowable<MoviesResponse> {
-        return remoteDataSource.getTopRatedMovies(apiKey)
+    override fun getTopRatedMovies(): Flowable<MoviesResponse> {
+        return remoteDataSource.getTopRatedMovies()
     }
 
-    override fun getUpcomingMovies(apiKey: String): Flowable<MoviesResponse> {
-        return remoteDataSource.getUpcomingMovies(apiKey)
+    override fun getUpcomingMovies(): Flowable<MoviesResponse> {
+        return remoteDataSource.getUpcomingMovies()
     }
 
-    override fun getPopularMovies(apiKey: String): Flowable<MoviesResponse> {
-        return remoteDataSource.getPopularMovies(apiKey)
+    override fun getPopularMovies(): Flowable<MoviesResponse> {
+        return remoteDataSource.getPopularMovies()
     }
 
-    override fun getMovieDetails(id: String, apiKey: String): Flowable<Movie> {
-        return remoteDataSource.getMovieDetails(id, apiKey)
+    override fun getMovieDetails(id: String): Flowable<Movie> {
+        return remoteDataSource.getMovieDetails(id)
     }
 
 }

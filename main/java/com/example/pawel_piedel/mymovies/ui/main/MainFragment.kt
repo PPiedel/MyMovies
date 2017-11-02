@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.ui.movies
+package com.example.pawel_piedel.mymovies.ui.main
 
 import android.app.Fragment
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.os.Bundle
 /**
  * Created by Pawel_Piedel on 30.10.2017.
  */
-class MoviesFragment : Fragment() {
+class MainFragment : Fragment() {
 
 
     class PlaceholderFragment : android.support.v4.app.Fragment() {

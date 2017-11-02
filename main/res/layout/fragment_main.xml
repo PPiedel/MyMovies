@@ -4,7 +4,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.pawel_piedel.mymovies.ui.movies.MoviesFragment$PlaceholderFragment">
+    tools:context="com.example.pawel_piedel.mymovies.ui.main.MainFragment$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"

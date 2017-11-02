@@ -1,11 +1,13 @@
 package com.example.pawel_piedel.mymovies.injection.module
 
+import com.example.pawel_piedel.mymovies.R
 import com.example.pawel_piedel.mymovies.data.source.remote.ApiService
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
