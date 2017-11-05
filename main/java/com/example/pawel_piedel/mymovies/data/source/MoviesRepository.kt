@@ -8,7 +8,7 @@ import io.reactivex.Flowable
 /**
  * Created by Pawel_Piedel on 30.10.2017.
  */
-class MoviesRepository(private val remoteDataSource: RemoteDataSource) : MoviesDataSource {
+class MoviesRepository(private val remoteDataSource: MoviesDataSource) : MoviesDataSource {
 
     override fun getTopRatedMovies(): Flowable<MoviesResponse> {
         return remoteDataSource.getTopRatedMovies()
