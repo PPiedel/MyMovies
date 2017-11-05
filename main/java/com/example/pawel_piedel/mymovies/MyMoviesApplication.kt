@@ -10,16 +10,9 @@ import com.example.pawel_piedel.mymovies.injection.module.AppModule
  * Created by Pawel_Piedel on 31.10.2017.
  */
 class MyMoviesApplication : Application() {
-
     private var appComponent: AppComponent? = null
 
-    companion object {
-        operator fun get(context: Context): MyMoviesApplication {
-            return context.applicationContext as MyMoviesApplication
-        }
-    }
-
-    public var component: AppComponent
+    var component: AppComponent
         get() {
             if (appComponent == null) {
                 initDagger()
@@ -34,5 +27,11 @@ class MyMoviesApplication : Application() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
+    }
+
+    companion object {
+        operator fun get(context: Context): MyMoviesApplication {
+            return context.applicationContext as MyMoviesApplication
+        }
     }
 }
