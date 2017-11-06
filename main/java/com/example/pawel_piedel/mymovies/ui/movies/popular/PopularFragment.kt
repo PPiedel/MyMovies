@@ -1,7 +1,6 @@
 package com.example.pawel_piedel.mymovies.ui.movies.popular
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
@@ -13,8 +12,6 @@ import android.view.ViewGroup
 import com.example.pawel_piedel.mymovies.MyMoviesApplication
 import com.example.pawel_piedel.mymovies.R
 import com.example.pawel_piedel.mymovies.data.model.Movie
-import com.example.pawel_piedel.mymovies.injection.component.DaggerAppComponent
-import com.example.pawel_piedel.mymovies.injection.module.AppModule
 import com.example.pawel_piedel.mymovies.ui.movies.MoviesAdapter
 import com.example.pawel_piedel.mymovies.ui.movies.MoviesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,7 +25,7 @@ class PopularFragment : Fragment() {
 
     @Inject lateinit var moviesViewModel: MoviesViewModel
 
-    private val subscriptions = CompositeDisposable()
+    var subscriptions: CompositeDisposable = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         MyMoviesApplication[context].component.inject(this)
@@ -50,7 +47,7 @@ class PopularFragment : Fragment() {
         subscriptions.add(moviesViewModel.loadPopularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext { moviesResponse -> Log.d(LOG_TAG,moviesResponse.toString()) }
+                .doOnNext { moviesResponse -> Log.d(LOG_TAG, moviesResponse.toString()) }
                 .subscribe({ moviesResponse ->
                     showMovies(moviesResponse.results)
                 }, {

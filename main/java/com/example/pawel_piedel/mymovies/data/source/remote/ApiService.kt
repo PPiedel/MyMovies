@@ -42,6 +42,7 @@ interface ApiService {
         const val API_KEY_PARAM = "api_key"
         const val MOVIE_ID_PARAM = "movie_id"
         const val BASE_URL = "https://api.themoviedb.org/3/"
+        const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
     }
 
 
