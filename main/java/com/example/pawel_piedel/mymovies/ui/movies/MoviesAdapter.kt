@@ -1,15 +1,11 @@
 package com.example.pawel_piedel.mymovies.ui.movies
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.bumptech.glide.TransitionOptions
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.withCrossFade
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.pawel_piedel.mymovies.R
@@ -32,6 +28,7 @@ class MoviesAdapter(private val context: Context, private val movies: List<Movie
         val movie = movies[position]
 
         holder.title.text = movie.title
+        holder.secondTitle.text = movie.releaseDate
 
         Glide.with(context)
                 .load(ApiService.BASE_IMAGE_URL + movie.posterPath)
@@ -39,13 +36,14 @@ class MoviesAdapter(private val context: Context, private val movies: List<Movie
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.image)
 
+
     }
 
     override fun getItemCount(): Int = movies.size
 
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cardView = view.card_view
         val image = view.thumbnail
         val title = view.title
+        val secondTitle = view.secondTitle
     }
 }
