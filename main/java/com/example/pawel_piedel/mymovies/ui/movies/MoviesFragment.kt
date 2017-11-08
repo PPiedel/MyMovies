@@ -2,16 +2,16 @@ package com.example.pawel_piedel.mymovies.ui.movies
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.pawel_piedel.mymovies.MyMoviesApplication
 import com.example.pawel_piedel.mymovies.R
-import com.example.pawel_piedel.mymovies.data.model.Movie
-import com.example.pawel_piedel.mymovies.data.model.MoviesCategory
+import com.example.pawel_piedel.mymovies.data.model.api_model.Movie
+import com.example.pawel_piedel.mymovies.data.model.api_model.MoviesCategory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -52,6 +52,7 @@ class MoviesFragment : Fragment() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ moviesResponse ->
                         showMovies(moviesResponse.results)
+
                     }, {
                         showError()
                     }))
@@ -69,14 +70,14 @@ class MoviesFragment : Fragment() {
 
     fun showMovies(movies: List<Movie>) {
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(2, 4, true))
+        recyclerView?.addItemDecoration(GridSpacingItemDecoration(2, 4, true))
         recyclerView.adapter = MoviesAdapter(context, movies)
-
     }
 
-    fun showError() {
 
+    fun showError() {
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = EmptyRecyclerViewAdapter(getString(R.string.we_cannot_download_data))
     }
 
     override fun onPause() {

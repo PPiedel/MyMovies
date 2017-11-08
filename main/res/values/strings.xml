@@ -4,4 +4,8 @@
     <string name="top_rated">Top Rated</string>
     <string name="upcoming">Upcoming</string>
     <string name="thumbnail">Thumbnail</string>
-    </resources>
+    <string name="sad_face">Sad face</string>
+    <string name="we_have_problem">Mamy problem.</string>
+    <string name="we_cannot_download_data">Nie możemy pobrać danych.</string>
+    <string name="try_again">Sprawdź połączenie z Internetem i spróbuj ponownie.</string>
+</resources>
