@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.ui.movies
+package com.example.pawel_piedel.mymovies.movies
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import com.example.pawel_piedel.mymovies.R
-import com.example.pawel_piedel.mymovies.data.model.MoviesCategory
+import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import kotlinx.android.synthetic.main.activity_main.*
 
 

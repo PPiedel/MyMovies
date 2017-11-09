@@ -1,7 +1,7 @@
 package com.example.pawel_piedel.mymovies.data.source.remote
 
-import com.example.pawel_piedel.mymovies.data.model.Movie
-import com.example.pawel_piedel.mymovies.data.model.MoviesResponse
+import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
 import io.reactivex.Flowable
 import javax.inject.Inject

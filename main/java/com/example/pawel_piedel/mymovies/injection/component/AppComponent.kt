@@ -4,7 +4,7 @@ import com.example.pawel_piedel.mymovies.injection.module.ApiModule
 import com.example.pawel_piedel.mymovies.injection.module.AppModule
 import com.example.pawel_piedel.mymovies.injection.module.DataModule
 import com.example.pawel_piedel.mymovies.injection.module.ViewModelModule
-import com.example.pawel_piedel.mymovies.ui.movies.MoviesFragment
+import com.example.pawel_piedel.mymovies.movies.MoviesFragment
 import dagger.Component
 import javax.inject.Singleton
 

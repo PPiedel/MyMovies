@@ -1,7 +1,8 @@
 package com.example.pawel_piedel.mymovies.injection.module
 
 import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
-import com.example.pawel_piedel.mymovies.ui.movies.MoviesViewModel
+import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
+import com.example.pawel_piedel.mymovies.movies.MoviesViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -14,5 +15,5 @@ class ViewModelModule {
 
     @Provides
     @Singleton
-    fun provideMoviesViewModel(moviesDataSource: MoviesDataSource): MoviesViewModel = MoviesViewModel(moviesDataSource)
+    fun provideMoviesViewModel(moviesRepository: MoviesRepository): MoviesViewModel = MoviesViewModel(moviesRepository)
 }

@@ -1,11 +1,11 @@
-package com.example.pawel_piedel.mymovies.ui.movies
+package com.example.pawel_piedel.mymovies.movies
 
 import org.junit.Test
 
 import org.junit.Assert.*
 
 /**
- * Created by Pawel_Piedel on 07.11.2017.
+ * Created by Pawel_Piedel on 08.11.2017.
  */
 class MoviesFragmentTest {
     @Test
@@ -17,17 +17,7 @@ class MoviesFragmentTest {
     }
 
     @Test
-    fun bindPopularMovies() {
-    }
-
-    @Test
-    fun bindTopRatedMovies(){
-
-    }
-
-    @Test
-    fun bindUpcomingMovies(){
-
+    fun bindMovies() {
     }
 
     @Test

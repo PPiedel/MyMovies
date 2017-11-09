@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.ui.movies
+package com.example.pawel_piedel.mymovies.movies
 
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView

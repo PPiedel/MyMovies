@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.ui.movies
+package com.example.pawel_piedel.mymovies.movies
 
 /**
  * Created by Pawel_Piedel on 08.11.2017.
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.empty_list.view.*
 
 class EmptyRecyclerViewAdapter(private val mMessage: String?) : RecyclerView.Adapter<EmptyRecyclerViewAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmptyRecyclerViewAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.empty_list, parent, false)
         val viewHolder = ViewHolder(view)
 
@@ -22,7 +22,7 @@ class EmptyRecyclerViewAdapter(private val mMessage: String?) : RecyclerView.Ada
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: EmptyRecyclerViewAdapter.ViewHolder, position: Int) {}
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {}
 
     override fun getItemCount(): Int {
         return 1

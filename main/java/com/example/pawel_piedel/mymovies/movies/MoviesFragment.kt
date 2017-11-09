@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.ui.movies
+package com.example.pawel_piedel.mymovies.movies
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.pawel_piedel.mymovies.MyMoviesApplication
 import com.example.pawel_piedel.mymovies.R
-import com.example.pawel_piedel.mymovies.data.model.api_model.Movie
-import com.example.pawel_piedel.mymovies.data.model.api_model.MoviesCategory
+import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.data.model
+package com.example.pawel_piedel.mymovies.data.model.model
 
 /**
  * Created by Pawel_Piedel on 30.10.2017.

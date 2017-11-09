@@ -5,7 +5,7 @@
     <string name="upcoming">Upcoming</string>
     <string name="thumbnail">Thumbnail</string>
     <string name="sad_face">Sad face</string>
-    <string name="we_have_problem">Mamy problem.</string>
-    <string name="we_cannot_download_data">Nie możemy pobrać danych.</string>
-    <string name="try_again">Sprawdź połączenie z Internetem i spróbuj ponownie.</string>
+    <string name="we_have_problem">We\'ve got problem.</string>
+    <string name="we_cannot_download_data">We can not download movies data.</string>
+    <string name="try_again">Check your Internet connection and try again.</string>
 </resources>
