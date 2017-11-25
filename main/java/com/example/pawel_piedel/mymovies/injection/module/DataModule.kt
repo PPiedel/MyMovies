@@ -1,6 +1,5 @@
 package com.example.pawel_piedel.mymovies.injection.module
 
-import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
 import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
 import com.example.pawel_piedel.mymovies.data.source.local.LocalDataSource
 import com.example.pawel_piedel.mymovies.data.source.remote.RemoteDataSource

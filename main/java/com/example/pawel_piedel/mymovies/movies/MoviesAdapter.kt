@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.example.pawel_piedel.mymovies.R
+import com.example.pawel_piedel.myapplication.R
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.source.remote.ApiService
 import kotlinx.android.synthetic.main.item_movie.view.*

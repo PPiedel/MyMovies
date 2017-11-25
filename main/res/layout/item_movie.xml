@@ -4,9 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/thumbnail"
@@ -22,7 +19,6 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/thumbnail"
             android:maxLines="1"
             android:paddingLeft="@dimen/movie_title_padding"
             android:paddingRight="@dimen/movie_title_padding"
@@ -33,12 +29,9 @@
             android:id="@+id/secondTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title"
             android:paddingBottom="@dimen/movie_title_padding"
             android:paddingEnd="@dimen/movie_title_padding"
             android:paddingStart="@dimen/movie_title_padding"
             android:textSize="@dimen/movie_second_title_font_size" />
-
-    </RelativeLayout>
 
 </LinearLayout>

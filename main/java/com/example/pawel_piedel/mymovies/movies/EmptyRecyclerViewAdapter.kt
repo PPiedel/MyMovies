@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.pawel_piedel.mymovies.R
+import com.example.pawel_piedel.myapplication.R
 import kotlinx.android.synthetic.main.empty_list.view.*
 
 class EmptyRecyclerViewAdapter(private val mMessage: String?) : RecyclerView.Adapter<EmptyRecyclerViewAdapter.ViewHolder>() {
@@ -29,7 +29,7 @@ class EmptyRecyclerViewAdapter(private val mMessage: String?) : RecyclerView.Ada
     }
 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
-        val message : TextView = mView.empty_item_message
+        val message: TextView = mView.empty_item_message
 
     }
 }

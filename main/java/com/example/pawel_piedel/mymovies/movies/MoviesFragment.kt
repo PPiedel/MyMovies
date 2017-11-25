@@ -8,8 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.pawel_piedel.myapplication.R
 import com.example.pawel_piedel.mymovies.MyMoviesApplication
-import com.example.pawel_piedel.mymovies.R
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,7 +39,7 @@ class MoviesFragment : Fragment() {
 
     fun bindMovies(movieCategory: MoviesCategory) {
         when (movieCategory) {
-            MoviesCategory.POPULAR -> subscriptions.addAll(moviesViewModel.loadPopularMovies()
+            MoviesCategory.POPULAR -> subscriptions.add(moviesViewModel.loadPopularMovies()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ moviesResponse ->
@@ -47,7 +47,7 @@ class MoviesFragment : Fragment() {
                     }, {
                         showError()
                     }))
-            MoviesCategory.TOP_RATED -> subscriptions.addAll(moviesViewModel.loadTopRatedMovies()
+            MoviesCategory.TOP_RATED -> subscriptions.add(moviesViewModel.loadTopRatedMovies()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ moviesResponse ->
@@ -56,7 +56,7 @@ class MoviesFragment : Fragment() {
                     }, {
                         showError()
                     }))
-            MoviesCategory.UPCOMING -> subscriptions.addAll(moviesViewModel.loadUpcomingMovies()
+            MoviesCategory.UPCOMING -> subscriptions.add(moviesViewModel.loadUpcomingMovies()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ moviesResponse ->

@@ -7,10 +7,11 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 /**
- * Created by Pawel_Piedel on 08.11.2017.
+ * Created by Pawel_Piedel on 25.11.2017.
  */
+
 class LocalDataSource @Inject
-constructor() : MoviesDataSource {
+constructor() : MoviesDataSource{
     override fun getMovieDetails(id: String): Flowable<Movie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -26,4 +27,5 @@ constructor() : MoviesDataSource {
     override fun getPopularMovies(): Flowable<MoviesResponse> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }

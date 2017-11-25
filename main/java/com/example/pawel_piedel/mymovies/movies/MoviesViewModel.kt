@@ -11,19 +11,14 @@ import javax.inject.Inject
  */
 class MoviesViewModel @Inject
 constructor(private val moviesRepository: MoviesRepository) {
+
     val loadingIndicator: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
-    fun loadPopularMovies(): Flowable<MoviesResponse> {
-        return moviesRepository.getPopularMovies()
-    }
+    fun loadPopularMovies(): Flowable<MoviesResponse> = moviesRepository.getPopularMovies()
 
-    fun loadTopRatedMovies(): Flowable<MoviesResponse> {
-        return moviesRepository.getTopRatedMovies()
-    }
+    fun loadTopRatedMovies(): Flowable<MoviesResponse> = moviesRepository.getTopRatedMovies()
 
-    fun loadUpcomingMovies(): Flowable<MoviesResponse> {
-        return moviesRepository.getUpcomingMovies()
-    }
+    fun loadUpcomingMovies(): Flowable<MoviesResponse> = moviesRepository.getUpcomingMovies()
 
 
 }

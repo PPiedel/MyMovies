@@ -1,6 +1,6 @@
 package com.example.pawel_piedel.mymovies.data.source.remote
 
-import com.example.pawel_piedel.mymovies.BuildConfig
+import com.example.pawel_piedel.myapplication.BuildConfig
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import io.reactivex.Flowable

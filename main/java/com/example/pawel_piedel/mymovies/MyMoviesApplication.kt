@@ -30,8 +30,7 @@ class MyMoviesApplication : Application() {
     }
 
     companion object {
-        operator fun get(context: Context): MyMoviesApplication {
-            return context.applicationContext as MyMoviesApplication
-        }
+        operator fun get(context: Context): MyMoviesApplication =
+                context.applicationContext as MyMoviesApplication
     }
 }
