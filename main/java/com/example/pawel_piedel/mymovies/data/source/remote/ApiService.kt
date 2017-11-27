@@ -4,6 +4,7 @@ import com.example.pawel_piedel.myapplication.BuildConfig
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -15,7 +16,7 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path(MOVIE_ID) id: String,
-                        @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<Movie>
+                        @Query(API_KEY_PARAM) apiKey: String = API_KEY): Single<Movie>
 
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovies(@Path(MOVIE_ID) id: String,

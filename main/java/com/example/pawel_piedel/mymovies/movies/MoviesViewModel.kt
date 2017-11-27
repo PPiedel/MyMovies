@@ -1,7 +1,7 @@
 package com.example.pawel_piedel.mymovies.movies
 
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
-import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
+import com.example.pawel_piedel.mymovies.data.source.RemoteRepository
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Created by Pawel_Piedel on 05.11.2017.
  */
 class MoviesViewModel @Inject
-constructor(private val moviesRepository: MoviesRepository) {
+constructor(private val moviesRepository: RemoteRepository) {
 
     val loadingIndicator: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
