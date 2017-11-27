@@ -8,7 +8,6 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.anyString
 import org.mockito.MockitoAnnotations
 
 /**
@@ -20,21 +19,21 @@ internal class MoviesRepositoryTest {
     lateinit var movieResponse: MoviesResponse
 
     @Mock
-    lateinit var remoteDataSource: MoviesDataSource
+    lateinit var remoteDataSource: RemoteDataSource
 
     @Mock
-    lateinit var localDataSource: MoviesDataSource
+    lateinit var localDataSource: RemoteDataSource
 
     @Mock
     lateinit var movie: Movie
 
-    lateinit var moviesRepository: MoviesRepository
+    lateinit var moviesRepository: RemoteRepository
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
 
-        moviesRepository = MoviesRepository(remoteDataSource, localDataSource)
+        moviesRepository = RemoteRepository(remoteDataSource, localDataSource)
 
     }
 
