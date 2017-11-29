@@ -2,9 +2,11 @@ package com.example.pawel_piedel.mymovies
 
 import android.app.Application
 import android.content.Context
+import com.example.pawel_piedel.myapplication.BuildConfig
 import com.example.pawel_piedel.mymovies.injection.component.AppComponent
 import com.example.pawel_piedel.mymovies.injection.component.DaggerAppComponent
 import com.example.pawel_piedel.mymovies.injection.module.AppModule
+import timber.log.Timber
 
 /**
  * Created by Pawel_Piedel on 31.10.2017.
@@ -27,6 +29,13 @@ class MyMoviesApplication : Application() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 
     companion object {

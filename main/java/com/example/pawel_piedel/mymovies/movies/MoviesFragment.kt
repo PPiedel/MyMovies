@@ -39,31 +39,33 @@ class MoviesFragment : Fragment() {
 
     fun bindMovies(movieCategory: MoviesCategory) {
         when (movieCategory) {
-            MoviesCategory.POPULAR -> subscriptions.add(moviesViewModel.loadPopularMovies()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ moviesResponse ->
-                        showMovies(moviesResponse.results)
-                    }, {
-                        showError()
-                    }))
-            MoviesCategory.TOP_RATED -> subscriptions.add(moviesViewModel.loadTopRatedMovies()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ moviesResponse ->
-                        showMovies(moviesResponse.results)
+            MoviesCategory.POPULAR -> {
+                subscriptions.add(moviesViewModel.loadPopularMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ showMovies(it.results) }, { showError() }))
+            }
+            MoviesCategory.TOP_RATED -> {
+                subscriptions.add(moviesViewModel.loadTopRatedMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            showMovies(it.results)
 
-                    }, {
-                        showError()
-                    }))
-            MoviesCategory.UPCOMING -> subscriptions.add(moviesViewModel.loadUpcomingMovies()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ moviesResponse ->
-                        showMovies(moviesResponse.results)
-                    }, {
-                        showError()
-                    }))
+                        }, {
+                            showError()
+                        }))
+            }
+            MoviesCategory.UPCOMING -> {
+                subscriptions.add(moviesViewModel.loadUpcomingMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            showMovies(it.results)
+                        }, {
+                            showError()
+                        }))
+            }
         }
 
     }
