@@ -1,32 +1,16 @@
 package com.example.pawel_piedel.mymovies.data.source.remote
 
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
-import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
 import io.reactivex.Flowable
-import javax.inject.Inject
+import io.reactivex.Single
 
 /**
- * Created by Pawel_Piedel on 30.10.2017.
+ * Created by Pawel_Piedel on 29.11.2017.
  */
-class RemoteDataSource @Inject
-constructor(private val apiService: ApiService) : MoviesDataSource {
+interface RemoteDataSource {
+    fun getMovies(moviesCategory: MoviesCategory): Flowable<List<Movie>>
 
-    override fun getTopRatedMovies(): Flowable<MoviesResponse> {
-        return apiService.getTopRatedMovies()
-    }
-
-    override fun getUpcomingMovies(): Flowable<MoviesResponse> {
-        return apiService.getUpcomingMovies()
-    }
-
-    override fun getPopularMovies(): Flowable<MoviesResponse> {
-        return apiService.getPopularMovies()
-    }
-
-    override fun getMovieDetails(id: String): Flowable<Movie> {
-        return apiService.getMovieDetails(id)
-    }
-
-
+    fun  getMovieDetails(id: Int): Single<Movie>
 }

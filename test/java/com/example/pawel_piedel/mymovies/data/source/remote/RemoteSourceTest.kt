@@ -9,37 +9,37 @@ import org.mockito.MockitoAnnotations
 /**
  * Created by Pawel_Piedel on 06.11.2017.
  */
-class RemoteDataSourceTest {
+class RemoteSourceTest {
 
     @Mock
     lateinit var apiService: ApiService
 
-    lateinit var remoteDataSource: RemoteDataSource
+    lateinit var remoteSource: RemoteSource
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        remoteDataSource = RemoteDataSource(apiService)
+        remoteSource = RemoteSource(apiService)
     }
 
     @Test
     fun getTopRatedMovies() {
-        remoteDataSource.getTopRatedMovies()
+        remoteSource.getTopRatedMovies()
 
         verify(apiService).getTopRatedMovies()
     }
 
     @Test
     fun getUpcomingMovies() {
-        remoteDataSource.getUpcomingMovies()
+        remoteSource.getUpcomingMovies()
 
         verify(apiService).getUpcomingMovies()
     }
 
     @Test
     fun getPopularMovies() {
-        remoteDataSource.getPopularMovies()
+        remoteSource.getPopularMovies()
 
         verify(apiService).getPopularMovies()
     }
@@ -47,7 +47,7 @@ class RemoteDataSourceTest {
     @Test
     fun getMovieDetails() {
         val testTitle = "test"
-        remoteDataSource.getMovieDetails(testTitle)
+        remoteSource.getMovieDetails(testTitle)
 
         verify(apiService).getMovieDetails(testTitle)
     }

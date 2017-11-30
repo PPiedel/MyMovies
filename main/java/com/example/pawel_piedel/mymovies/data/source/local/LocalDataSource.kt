@@ -1,31 +1,22 @@
 package com.example.pawel_piedel.mymovies.data.source.local
 
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
 import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
  * Created by Pawel_Piedel on 25.11.2017.
  */
 
-class LocalDataSource @Inject
-constructor() : MoviesDataSource{
-    override fun getMovieDetails(id: String): Flowable<Movie> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+interface LocalDataSource {
+    fun getMovies(moviesCategory: MoviesCategory): List<Movie>
 
-    override fun getTopRatedMovies(): Flowable<MoviesResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    fun  getMovieDetails(id: Int): Single<Movie>
 
-    override fun getUpcomingMovies(): Flowable<MoviesResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getPopularMovies(): Flowable<MoviesResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+    fun saveMovies(movies : List<Movie>)
 }

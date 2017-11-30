@@ -12,10 +12,12 @@ import com.example.pawel_piedel.myapplication.R
 import com.example.pawel_piedel.mymovies.MyMoviesApplication
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
+import com.github.ajalt.timberkt.e
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movies.*
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -41,30 +43,20 @@ class MoviesFragment : Fragment() {
         when (movieCategory) {
             MoviesCategory.POPULAR -> {
                 subscriptions.add(moviesViewModel.loadPopularMovies()
-                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ showMovies(it.results) }, { showError() }))
+                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }))
             }
             MoviesCategory.TOP_RATED -> {
                 subscriptions.add(moviesViewModel.loadTopRatedMovies()
-                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            showMovies(it.results)
-
-                        }, {
-                            showError()
-                        }))
+                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
+                        ))
             }
             MoviesCategory.UPCOMING -> {
                 subscriptions.add(moviesViewModel.loadUpcomingMovies()
-                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            showMovies(it.results)
-                        }, {
-                            showError()
-                        }))
+                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
+                        ))
             }
         }
 
@@ -77,7 +69,8 @@ class MoviesFragment : Fragment() {
     }
 
 
-    fun showError() {
+    fun showError(e: Throwable?) {
+        Timber.d(e?.message)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = EmptyRecyclerViewAdapter(getString(R.string.we_cannot_download_data))
     }

@@ -1,11 +1,13 @@
 package com.example.pawel_piedel.mymovies.data.model.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
 /**
  * Created by Pawel_Piedel on 29.10.2017.
  */
-data class ProductionCompany(
-        @SerializedName("name") val name: String, //Warner Bros.
-        @SerializedName("id") val id: Int //6194
-)
+open class ProductionCompany(
+        @PrimaryKey @SerializedName("name") var name: String? = "",
+        @SerializedName("id") var id: Int? = 0
+) : RealmObject()

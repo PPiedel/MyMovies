@@ -1,6 +1,7 @@
 package com.example.pawel_piedel.mymovies.data.source
 
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import io.reactivex.Flowable
 
@@ -10,9 +11,6 @@ import io.reactivex.Flowable
 interface MoviesDataSource {
     fun getMovieDetails(id: String): Flowable<Movie>
 
-    fun getTopRatedMovies(): Flowable<MoviesResponse>
+    fun getMovies(moviesCategory: MoviesCategory): Flowable<List<Movie>>
 
-    fun getUpcomingMovies(): Flowable<MoviesResponse>
-
-    fun getPopularMovies(): Flowable<MoviesResponse>
 }
