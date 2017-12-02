@@ -15,7 +15,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("movie/{movie_id}")
-    fun getMovieDetails(@Path(MOVIE_ID) id: Int,
+    fun getMovieDetails(@Path(MOVIE_ID) id: String,
                         @Query(API_KEY_PARAM) apiKey: String = API_KEY): Single<Movie>
 
     @GET("movie/{movie_id}/similar")
@@ -26,18 +26,15 @@ interface ApiService {
     fun getRecomendedMovies(@Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(@Query(PAGE) page: Int = DEFAULT_PAGE,
-                          @Query(LANGUAGE) lang: String = "en",
+    fun getTopRatedMovies(@Query(LANGUAGE) lang: String = "en",
                           @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/upcoming")
-    fun getUpcomingMovies(@Query(PAGE) page: Int = DEFAULT_PAGE,
-                          @Query(LANGUAGE) lang: String = "en",
+    fun getUpcomingMovies(@Query(LANGUAGE) lang: String = "en",
                           @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/popular")
-    fun getPopularMovies(@Query(PAGE) page: Int = DEFAULT_PAGE,
-                         @Query(LANGUAGE) lang: String = "en",
+    fun getPopularMovies(@Query(LANGUAGE) lang: String = "en",
                          @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/now_playing")
@@ -51,7 +48,6 @@ interface ApiService {
         const val LANGUAGE = "language"
         const val MOVIE_ID = "movie_id"
         const val PAGE = "page"
-        const val DEFAULT_PAGE = 1
 
     }
 

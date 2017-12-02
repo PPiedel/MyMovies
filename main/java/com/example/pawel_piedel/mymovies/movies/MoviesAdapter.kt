@@ -27,7 +27,7 @@ class MoviesAdapter(private val context: Context, private val movies: List<Movie
         val movie = movies[position]
 
         holder.title.text = movie.title
-        holder.secondTitle.text = movie.originalTitle
+        holder.releaseYear.text = movie.releaseDate
 
         Glide.with(context)
                 .load(ApiService.BASE_IMAGE_URL + movie.posterPath)
@@ -43,6 +43,6 @@ class MoviesAdapter(private val context: Context, private val movies: List<Movie
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image = view.thumbnail
         val title = view.title
-        val secondTitle = view.secondTitle
+        val releaseYear = view.releaseYear
     }
 }
