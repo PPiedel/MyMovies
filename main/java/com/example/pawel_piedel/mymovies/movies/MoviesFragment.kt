@@ -26,6 +26,8 @@ import javax.inject.Inject
 class MoviesFragment : Fragment() {
     @Inject lateinit var moviesViewModel: MoviesViewModel
 
+
+
     var subscriptions: CompositeDisposable = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

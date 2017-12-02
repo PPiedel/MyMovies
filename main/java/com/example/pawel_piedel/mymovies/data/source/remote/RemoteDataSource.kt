@@ -10,7 +10,7 @@ import io.reactivex.Single
  * Created by Pawel_Piedel on 29.11.2017.
  */
 interface RemoteDataSource {
-    fun getMovies(moviesCategory: MoviesCategory): Flowable<List<Movie>>
+    fun getMovies(moviesCategory: MoviesCategory): Flowable<MoviesResponse>
 
     fun  getMovieDetails(id: Int): Single<Movie>
 }

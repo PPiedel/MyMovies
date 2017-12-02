@@ -11,6 +11,6 @@ import io.reactivex.Flowable
 interface MoviesDataSource {
     fun getMovieDetails(id: String): Flowable<Movie>
 
-    fun getMovies(moviesCategory: MoviesCategory): Flowable<List<Movie>>
+    fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<List<Movie>>
 
 }

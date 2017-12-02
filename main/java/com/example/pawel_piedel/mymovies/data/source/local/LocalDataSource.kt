@@ -14,9 +14,9 @@ import javax.inject.Inject
  */
 
 interface LocalDataSource {
-    fun getMovies(moviesCategory: MoviesCategory): List<Movie>
+    fun getMovies(moviesCategory: MoviesCategory, page: Int): List<Movie>
 
     fun  getMovieDetails(id: Int): Single<Movie>
 
-    fun saveMovies(movies : List<Movie>)
+    fun saveMoviesResponse(moviesResponse: MoviesResponse)
 }

@@ -33,6 +33,5 @@ open class Movie(
         @SerializedName("title") var title: String? = "",
         @SerializedName("video") var video: Boolean? = false,
         @SerializedName("vote_average") var voteAverage: Double? = 0.0,
-        @SerializedName("vote_count") var voteCount: Int? = 0,
-        var category: String = MoviesCategory.DEFAULT.name
+        @SerializedName("vote_count") var voteCount: Int? = 0
 ) : RealmObject()
