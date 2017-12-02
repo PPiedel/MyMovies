@@ -24,7 +24,7 @@ constructor(private val remoteDataSource: RemoteDataSource, private val localDat
         Timber.d("Cached movies : ", cache.iterator().forEach { movie -> movie.toString() })
 
         return if (cache.isEmpty()) {
-            remoteDataSource.getMovies(moviesCategory)
+            remoteDataSource.getMovies(moviesCategory, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.computation())
                     .doOnNext { t: MoviesResponse -> t.category = moviesCategory.name; t.id = t.hashCode() }

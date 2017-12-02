@@ -14,11 +14,11 @@ import javax.inject.Inject
 class RemoteSource @Inject
 constructor(private val apiService: ApiService) : RemoteDataSource {
 
-    override fun getMovies(moviesCategory: MoviesCategory): Flowable<MoviesResponse> {
+    override fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<MoviesResponse> {
         return when (moviesCategory) {
-            MoviesCategory.TOP_RATED -> getTopRatedMovies()
-            MoviesCategory.POPULAR -> getPopularMovies()
-            MoviesCategory.UPCOMING -> getUpcomingMovies()
+            MoviesCategory.TOP_RATED -> getTopRatedMovies(page)
+            MoviesCategory.POPULAR -> getPopularMovies(page)
+            MoviesCategory.UPCOMING -> getUpcomingMovies(page)
             else -> {
                 Flowable.empty<MoviesResponse>()
             }
@@ -26,16 +26,16 @@ constructor(private val apiService: ApiService) : RemoteDataSource {
     }
 
 
-    private fun getTopRatedMovies(): Flowable<MoviesResponse> {
-        return apiService.getTopRatedMovies()
+    fun getTopRatedMovies(page: Int): Flowable<MoviesResponse> {
+        return apiService.getTopRatedMovies(page)
     }
 
-    private fun getUpcomingMovies(): Flowable<MoviesResponse> {
-        return apiService.getUpcomingMovies()
+    fun getUpcomingMovies(page: Int): Flowable<MoviesResponse> {
+        return apiService.getUpcomingMovies(page)
     }
 
-    private fun getPopularMovies(): Flowable<MoviesResponse> {
-        return apiService.getPopularMovies()
+    fun getPopularMovies(page: Int): Flowable<MoviesResponse> {
+        return apiService.getPopularMovies(page)
     }
 
     override fun getMovieDetails(id: Int): Single<Movie> {
