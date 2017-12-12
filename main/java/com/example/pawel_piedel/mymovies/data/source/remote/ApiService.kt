@@ -21,28 +21,28 @@ interface ApiService {
 
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovies(@Path(MOVIE_ID) id: String,
-                         @Query(API_KEY_PARAM) apiKey: String = API_KEY): Observable<MoviesResponse>
+                         @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/{movie_id}/recommendations")
-    fun getRecomendedMovies(@Query(API_KEY_PARAM) apiKey: String = API_KEY): Observable<MoviesResponse>
+    fun getRecomendedMovies(@Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/top_rated")
     fun getTopRatedMovies(@Query(PAGE) page: Int,
                           @Query(LANGUAGE) lang: String = "en",
-                          @Query(API_KEY_PARAM) apiKey: String = API_KEY): Observable<MoviesResponse>
+                          @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/upcoming")
     fun getUpcomingMovies(@Query(PAGE) page: Int,
                           @Query(LANGUAGE) lang: String = "en",
-                          @Query(API_KEY_PARAM) apiKey: String = API_KEY): Observable<MoviesResponse>
+                          @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/popular")
     fun getPopularMovies(@Query(PAGE) page: Int,
                          @Query(LANGUAGE) lang: String = "en",
-                         @Query(API_KEY_PARAM) apiKey: String = API_KEY): Observable<MoviesResponse>
+                         @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/now_playing")
-    fun getNowPlayingMovies(@Query(API_KEY_PARAM) apiKey: String = API_KEY): Observable<MoviesResponse>
+    fun getNowPlayingMovies(@Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     companion object {
         const val BASE_URL = "https://api.themoviedb.org/3/"

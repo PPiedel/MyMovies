@@ -4,10 +4,7 @@ import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import org.intellij.lang.annotations.Flow
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -22,7 +19,7 @@ constructor(private val moviesRepository: MoviesRepository) {
 
     val loadingIndicator: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
-    fun loadMoreMovies(moviesCategory: MoviesCategory): Observable<List<Movie>> {
+    fun loadMoreMovies(moviesCategory: MoviesCategory): Flowable<List<Movie>> {
         Timber.d("Load more movies : " + moviesCategory.name)
         return when (moviesCategory) {
             MoviesCategory.POPULAR -> {
@@ -39,23 +36,23 @@ constructor(private val moviesRepository: MoviesRepository) {
                 loadUpcomingMovies(upcomingPage)
             }
             else -> {
-                Observable.empty<List<Movie>>()
+                Flowable.empty<List<Movie>>()
             }
         }
     }
 
-    fun loadPopularMovies(page: Int = popularPage): Observable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.POPULAR, page)
+    fun loadPopularMovies(page: Int = popularPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.POPULAR, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
             .doOnError { _ -> loadingIndicator.onNext(false) }
 
 
-    fun loadTopRatedMovies(page: Int = topRatedPage): Observable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.TOP_RATED, page)
+    fun loadTopRatedMovies(page: Int = topRatedPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.TOP_RATED, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
             .doOnError { _ -> loadingIndicator.onNext(false) }
 
-    fun loadUpcomingMovies(page: Int = upcomingPage): Observable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.UPCOMING, page)
+    fun loadUpcomingMovies(page: Int = upcomingPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.UPCOMING, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
             .doOnError { _ -> loadingIndicator.onNext(false) }

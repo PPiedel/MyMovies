@@ -18,7 +18,7 @@ class MoviesRepository @Inject
 constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource) : MoviesDataSource {
 
 
-    override fun getMovies(moviesCategory: MoviesCategory, page: Int): Observable<List<Movie>> {
+    override fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<List<Movie>> {
         Timber.d("Page : " + page)
         val cache: List<Movie> = localDataSource.getMovies(moviesCategory, page)
 
@@ -35,7 +35,7 @@ constructor(private val remoteDataSource: RemoteDataSource, private val localDat
         } else {
             Timber.d("Cached movies : ", cache.toString())
             Timber.d("Cached movies : ", cache.iterator().forEach { movie -> movie.toString() })
-            Observable.just(cache)
+            Flowable.just(cache)
         }
 
 
