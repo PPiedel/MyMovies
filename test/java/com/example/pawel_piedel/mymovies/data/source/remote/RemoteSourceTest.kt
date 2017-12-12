@@ -16,6 +16,8 @@ class RemoteSourceTest {
 
     lateinit var remoteSource: RemoteSource
 
+    val pageNumber = 0
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -25,31 +27,31 @@ class RemoteSourceTest {
 
     @Test
     fun getTopRatedMovies() {
-        remoteSource.getTopRatedMovies()
+        remoteSource.getTopRatedMovies(pageNumber)
 
-        verify(apiService).getTopRatedMovies()
+        verify(apiService).getTopRatedMovies(pageNumber)
     }
 
     @Test
     fun getUpcomingMovies() {
-        remoteSource.getUpcomingMovies()
+        remoteSource.getUpcomingMovies(pageNumber)
 
-        verify(apiService).getUpcomingMovies()
+        verify(apiService).getUpcomingMovies(pageNumber)
     }
 
     @Test
     fun getPopularMovies() {
-        remoteSource.getPopularMovies()
+        remoteSource.getPopularMovies(pageNumber)
 
-        verify(apiService).getPopularMovies()
+        verify(apiService).getPopularMovies(pageNumber)
     }
 
     @Test
     fun getMovieDetails() {
-        val testTitle = "test"
-        remoteSource.getMovieDetails(testTitle)
+        val testId = 1
+        remoteSource.getMovieDetails(testId)
 
-        verify(apiService).getMovieDetails(testTitle)
+        verify(apiService).getMovieDetails(testId)
     }
 
 }
