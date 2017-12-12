@@ -16,7 +16,9 @@ import kotlinx.android.synthetic.main.item_movie.view.*
 /**
  * Created by Pawel_Piedel on 03.11.2017.
  */
-class MoviesAdapter(private val context: Context, private val movies: List<Movie>) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+class MoviesAdapter(private val context: Context) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+
+    var movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -39,6 +41,11 @@ class MoviesAdapter(private val context: Context, private val movies: List<Movie
     }
 
     override fun getItemCount(): Int = movies.size
+
+    fun addMovies(newMovies: List<Movie>) {
+        movies.addAll(newMovies)
+        notifyDataSetChanged()
+    }
 
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image = view.thumbnail

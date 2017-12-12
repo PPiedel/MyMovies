@@ -6,7 +6,7 @@ import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import com.example.pawel_piedel.mymovies.data.source.local.LocalDataSource
 import com.example.pawel_piedel.mymovies.data.source.remote.RemoteDataSource
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,22 +18,24 @@ class MoviesRepository @Inject
 constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource) : MoviesDataSource {
 
 
-    override fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<List<Movie>> {
-        val cache: List<Movie> = (localDataSource::getMovies)(moviesCategory, page)
+    override fun getMovies(moviesCategory: MoviesCategory, page: Int): Observable<List<Movie>> {
+        Timber.d("Page : " + page)
+        val cache: List<Movie> = localDataSource.getMovies(moviesCategory, page)
 
         Timber.d("Cached movies : ", cache.iterator().forEach { movie -> movie.toString() })
-
+        Timber.d("Cache size : " + cache.size)
+        Timber.d("Cache is empty :" + cache.isEmpty())
         return if (cache.isEmpty()) {
+            Timber.d("Wysylam GET dla page : " + page)
             remoteDataSource.getMovies(moviesCategory, page)
-                    .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.computation())
                     .doOnNext { t: MoviesResponse -> t.category = moviesCategory.name; t.id = t.hashCode() }
-                    .observeOn(AndroidSchedulers.mainThread())
                     .map { response -> (localDataSource::saveMoviesResponse)(response) }
                     .map { (localDataSource::getMovies)(moviesCategory, page) }
         } else {
-            Timber.d("Zwracam tylko cache")
-            Flowable.just(cache).subscribeOn(Schedulers.io())
+            Timber.d("Cached movies : ", cache.toString())
+            Timber.d("Cached movies : ", cache.iterator().forEach { movie -> movie.toString() })
+            Observable.just(cache)
         }
 
 
