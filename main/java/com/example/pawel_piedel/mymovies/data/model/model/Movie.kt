@@ -34,4 +34,8 @@ open class Movie(
         @SerializedName("video") var video: Boolean? = false,
         @SerializedName("vote_average") var voteAverage: Double? = 0.0,
         @SerializedName("vote_count") var voteCount: Int? = 0
-) : RealmObject()
+) : RealmObject() {
+    override fun toString(): String {
+        return "Movie(id=$id, productionCompanies=$productionCompanies, productionCountries=$productionCountries, genres=$genres, spokenLanguages=$spokenLanguages, adult=$adult, backdropPath=$backdropPath, belongsToCollection=$belongsToCollection, budget=$budget, homepage=$homepage, imdbId=$imdbId, originalLanguage=$originalLanguage, originalTitle=$originalTitle, overview=$overview, popularity=$popularity, posterPath=$posterPath, releaseDate=$releaseDate, revenue=$revenue, runtime=$runtime, status=$status, tagline=$tagline, title=$title, video=$video, voteAverage=$voteAverage, voteCount=$voteCount)"
+    }
+}

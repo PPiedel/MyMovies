@@ -1,11 +1,12 @@
 package com.example.pawel_piedel.mymovies.data.source.local
 
+import android.util.Log
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 import io.realm.Realm
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -16,16 +17,21 @@ import javax.inject.Inject
 class LocalSource @Inject
 constructor(val realm: Realm) : LocalDataSource {
 
+    val realmTransaction: BehaviorSubject<Boolean> = BehaviorSubject.create()
+
     override fun saveMoviesResponse(moviesResponse: MoviesResponse) {
-        realm.executeTransaction {
-            realm.copyToRealmOrUpdate(moviesResponse)
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction { transactionRealm ->
+            transactionRealm.copyToRealmOrUpdate(moviesResponse)
+
         }
+        realm.close()
     }
 
 
     override fun getMovies(moviesCategory: MoviesCategory, page: Int): List<Movie> {
-        val movies = realm.where(MoviesResponse::class.java).equalTo(MoviesResponse::category.name, moviesCategory.name).and().equalTo(MoviesResponse::page.name, page).findFirst()
-        return movies?.results ?: emptyList<Movie>()
+        Log.d("Log", "Jestem w getMovies")
+        return realm.where(MoviesResponse::class.java).findAll().flatMap { moviesResponse -> moviesResponse.results }.toList()
     }
 
 
