@@ -8,6 +8,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.BlockJUnit4ClassRunner
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
@@ -15,6 +17,7 @@ import org.mockito.MockitoAnnotations
 /**
  * Created by Pawel_Piedel on 11.12.2017.
  */
+@RunWith(BlockJUnit4ClassRunner::class)
 class MoviesViewModelTest {
 
     @Mock
