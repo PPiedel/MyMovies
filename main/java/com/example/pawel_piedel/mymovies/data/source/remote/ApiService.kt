@@ -51,7 +51,7 @@ interface ApiService {
         const val API_KEY_PARAM = "api_key"
         const val LANGUAGE = "language"
         const val MOVIE_ID = "movie_id"
-        const val PAGE = "page"
+        const val PAGE = "PAGE"
 
     }
 

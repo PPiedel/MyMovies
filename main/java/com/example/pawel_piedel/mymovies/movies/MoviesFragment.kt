@@ -155,7 +155,7 @@ class MoviesFragment : Fragment() {
 
     companion object {
         val LOG_TAG = "Movies Fragment"
-        val KEY = "category"
+        val KEY = "CATEGORY"
 
         fun newInstance(movieCategory: MoviesCategory): MoviesFragment {
             val fragment = MoviesFragment()

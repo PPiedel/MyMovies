@@ -3,27 +3,30 @@ package com.example.pawel_piedel.mymovies.data.source
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
-import com.example.pawel_piedel.mymovies.data.source.local.LocalDataSource
+import com.example.pawel_piedel.mymovies.local.LocalDataSource
 import com.example.pawel_piedel.mymovies.data.source.remote.RemoteDataSource
 import io.reactivex.Flowable
-import io.realm.RealmList
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
+import org.junit.runner.RunWith
+import org.junit.runners.BlockJUnit4ClassRunner
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.any
 import org.mockito.MockitoAnnotations
 
 /**
  * Created by Pawel_Piedel on 05.11.2017.
  */
+@RunWith(BlockJUnit4ClassRunner::class)
 internal class MoviesRepositoryTest {
 
     @Mock
     lateinit var movieResponse: MoviesResponse
 
     lateinit var testMovies: List<Movie>
+
+    @Mock
+    lateinit var emptyMovies: List<Movie>
 
     @Mock
     lateinit var remoteDataSource: RemoteDataSource
@@ -49,7 +52,7 @@ internal class MoviesRepositoryTest {
     }
 
     @Test
-    fun getCachedMovies() {
+    fun repositoryShouldReturnCachedMovies() {
         val category = MoviesCategory.POPULAR
         val testPage = 1
         `when`(localDataSource.getMovies(category, testPage)).thenReturn(testMovies)
@@ -58,15 +61,13 @@ internal class MoviesRepositoryTest {
     }
 
     @Test
-    fun getMoviesFromApi() {
+    fun repositoryShouldReturnEmptyList() {
         val category = MoviesCategory.POPULAR
         val testPage = 1
-        movieResponse.results = RealmList(movie, movie, movie)
         `when`(localDataSource.getMovies(category, testPage)).thenReturn(emptyList())
-        `when`(remoteDataSource.getMovies(category, testPage)).thenReturn(Flowable.just(movieResponse))
-        `when`((localDataSource::saveMoviesResponse)(ArgumentMatchers.any(MoviesResponse::class.java))).thenReturn(Unit)
+        `when`(remoteDataSource.getMovies(category, testPage)).thenReturn(Flowable.empty())
 
-        moviesRepository.getMovies(category, testPage).test().assertResult(movieResponse.results)
+        moviesRepository.getMovies(category, testPage).test().assertEmpty()
     }
 
 }

@@ -1,11 +1,10 @@
-package com.example.pawel_piedel.mymovies.data.source.local
+package com.example.pawel_piedel.mymovies.local
 
 import android.util.Log
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
 import io.realm.Realm
 import javax.inject.Inject
 
@@ -16,8 +15,6 @@ import javax.inject.Inject
 
 class LocalSource @Inject
 constructor(val realm: Realm) : LocalDataSource {
-
-    val realmTransaction: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     override fun saveMoviesResponse(moviesResponse: MoviesResponse) {
         val realm = Realm.getDefaultInstance()
@@ -31,12 +28,22 @@ constructor(val realm: Realm) : LocalDataSource {
 
     override fun getMovies(moviesCategory: MoviesCategory, page: Int): List<Movie> {
         Log.d("Log", "Jestem w getMovies")
-        return realm.where(MoviesResponse::class.java).findAll().flatMap { moviesResponse -> moviesResponse.results }.toList()
+        return realm.where(MoviesResponse::class.java).equalTo(PAGE, page).equalTo(CATEGORY, moviesCategory.name)
+                .findFirst()
+                ?.results?.toList().orEmpty()
+
+        // .findAll()
+        //  .flatMap { moviesResponse: MoviesResponse -> moviesResponse.results }.toList()
     }
 
 
     override fun getMovieDetails(id: Int): Single<Movie> {
         val movie = realm.where(Movie::class.java).like(Movie::id.name, id.toString()).findFirst()
         return Single.just(movie)
+    }
+
+    companion object {
+        const val PAGE = "page"
+        const val CATEGORY = "category"
     }
 }

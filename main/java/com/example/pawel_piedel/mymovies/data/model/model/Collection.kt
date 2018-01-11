@@ -14,4 +14,8 @@ open class Collection(
         @SerializedName("name") var name: String? = "",
         @SerializedName("poster_path") var posterPath: String? = "",
         @SerializedName("backdrop_path") var backdropPath: String? = ""
-) : RealmObject()
+) : RealmObject(){
+    override fun toString(): String {
+        return "Collection(id=$id, name=$name, posterPath=$posterPath, backdropPath=$backdropPath)"
+    }
+}

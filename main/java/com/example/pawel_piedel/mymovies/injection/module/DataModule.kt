@@ -2,8 +2,8 @@ package com.example.pawel_piedel.mymovies.injection.module
 
 import android.content.Context
 import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
-import com.example.pawel_piedel.mymovies.data.source.local.LocalDataSource
-import com.example.pawel_piedel.mymovies.data.source.local.LocalSource
+import com.example.pawel_piedel.mymovies.local.LocalDataSource
+import com.example.pawel_piedel.mymovies.local.LocalSource
 import com.example.pawel_piedel.mymovies.data.source.remote.ApiService
 import com.example.pawel_piedel.mymovies.data.source.remote.RemoteDataSource
 import com.example.pawel_piedel.mymovies.data.source.remote.RemoteSource
