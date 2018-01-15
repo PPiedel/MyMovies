@@ -21,13 +21,13 @@ class MoviesActivityTest {
 
     @Test
     fun checkToolbarIsDisplayed() {
-        checkNotNull(withId(R.id.toolbar))
-        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        checkNotNull(withId(R.id.toolbar_details))
+        onView(withId(R.id.toolbar_details)).check(matches(isDisplayed()));
     }
 
     @Test
     fun checkToolbarTitle() {
-        onView(withText(R.string.app_name)).check(matches(withParent(withId(R.id.toolbar))));
+        onView(withText(R.string.app_name)).check(matches(withParent(withId(R.id.toolbar_details))));
     }
 
     @Test
