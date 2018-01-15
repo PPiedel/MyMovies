@@ -17,6 +17,7 @@ constructor(private val moviesRepository: MoviesRepository) {
     var topRatedPage = 1
     var popularPage = 1
     var upcomingPage = 1
+    var nowPlaying = 1
 
     val loadingIndicator: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
@@ -28,12 +29,13 @@ constructor(private val moviesRepository: MoviesRepository) {
             }
 
             MoviesCategory.TOP_RATED -> {
-                topRatedPage++
                 loadTopRatedMovies(topRatedPage)
             }
             MoviesCategory.UPCOMING -> {
-                upcomingPage++
                 loadUpcomingMovies(upcomingPage)
+            }
+            MoviesCategory.NOW_PLAYING -> {
+                loadNowPlayingMovies(nowPlaying)
             }
             else -> {
                 Flowable.empty<List<Movie>>()
@@ -59,6 +61,12 @@ constructor(private val moviesRepository: MoviesRepository) {
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
             .doOnNext { upcomingPage++ }
+            .doOnError { _ -> loadingIndicator.onNext(false) }
+
+    fun loadNowPlayingMovies(page: Int = nowPlaying): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.NOW_PLAYING, page)
+            .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
+            .doOnNext { _ -> loadingIndicator.onNext(false) }
+            .doOnNext { nowPlaying++ }
             .doOnError { _ -> loadingIndicator.onNext(false) }
 
 

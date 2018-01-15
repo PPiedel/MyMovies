@@ -119,6 +119,13 @@ class MoviesFragment : Fragment() {
                         .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
                         ))
             }
+            MoviesCategory.NOW_PLAYING -> {
+                subscriptions.add(moviesViewModel.loadNowPlayingMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
+                        ))
+            }
         }
 
     }

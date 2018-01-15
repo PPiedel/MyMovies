@@ -4,8 +4,6 @@ import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,6 +19,7 @@ constructor(private val apiService: ApiService) : RemoteDataSource {
             MoviesCategory.TOP_RATED -> getTopRatedMovies(page)
             MoviesCategory.POPULAR -> getPopularMovies(page)
             MoviesCategory.UPCOMING -> getUpcomingMovies(page)
+            MoviesCategory.NOW_PLAYING -> getNowPlayingMovies(page)
             else -> {
                 Flowable.empty<MoviesResponse>()
             }
@@ -39,6 +38,10 @@ constructor(private val apiService: ApiService) : RemoteDataSource {
     fun getPopularMovies(page: Int): Flowable<MoviesResponse> {
         Timber.d("getPopularMovies")
         return apiService.getPopularMovies(page)
+    }
+
+    fun getNowPlayingMovies(page: Int): Flowable<MoviesResponse> {
+        return apiService.getNowPlayingMovies(page)
     }
 
     override fun getMovieDetails(id: Int): Flowable<Movie> {
