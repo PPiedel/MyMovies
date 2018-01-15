@@ -17,7 +17,7 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path(MOVIE_ID) id: Int,
-                        @Query(API_KEY_PARAM) apiKey: String = API_KEY): Single<Movie>
+                        @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<Movie>
 
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovies(@Path(MOVIE_ID) id: String,
@@ -51,7 +51,7 @@ interface ApiService {
         const val API_KEY_PARAM = "api_key"
         const val LANGUAGE = "language"
         const val MOVIE_ID = "movie_id"
-        const val PAGE = "PAGE"
+        const val PAGE = "page"
 
     }
 

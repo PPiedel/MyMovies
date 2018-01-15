@@ -41,7 +41,7 @@ constructor(private val apiService: ApiService) : RemoteDataSource {
         return apiService.getPopularMovies(page)
     }
 
-    override fun getMovieDetails(id: Int): Single<Movie> {
+    override fun getMovieDetails(id: Int): Flowable<Movie> {
         return apiService.getMovieDetails(id)
     }
 }

@@ -13,5 +13,5 @@ import io.reactivex.Single
 interface RemoteDataSource {
     fun getMovies(moviesCategory: MoviesCategory, page : Int): Flowable<MoviesResponse>
 
-    fun  getMovieDetails(id: Int): Single<Movie>
+    fun  getMovieDetails(id: Int): Flowable<Movie>
 }

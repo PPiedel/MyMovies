@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.local
+package com.example.pawel_piedel.mymovies.data.source.local
 
 import android.support.test.InstrumentationRegistry
 import com.example.pawel_piedel.mymovies.data.model.model.*
@@ -6,7 +6,6 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmList
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
 import org.junit.After
 import org.junit.Before

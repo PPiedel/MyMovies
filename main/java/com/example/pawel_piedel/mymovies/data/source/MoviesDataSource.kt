@@ -10,7 +10,7 @@ import io.reactivex.Observable
  * Created by Pawel_Piedel on 30.10.2017.
  */
 interface MoviesDataSource {
-    fun getMovieDetails(id: String): Flowable<Movie>
+    fun getMovieDetails(id: Int): Flowable<Movie>
 
     fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<List<Movie>>
 

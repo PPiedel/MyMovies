@@ -15,9 +15,11 @@
         <activity android:name="com.example.pawel_piedel.mymovies.movies.MoviesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.pawel_piedel.mymovies.movie_details.MovieDetailsActivity"></activity>
     </application>
 
 </manifest>

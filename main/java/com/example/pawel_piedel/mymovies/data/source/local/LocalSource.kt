@@ -1,4 +1,4 @@
-package com.example.pawel_piedel.mymovies.local
+package com.example.pawel_piedel.mymovies.data.source.local
 
 import android.util.Log
 import com.example.pawel_piedel.mymovies.data.model.model.Movie

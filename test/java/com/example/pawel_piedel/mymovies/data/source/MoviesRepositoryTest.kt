@@ -3,7 +3,7 @@ package com.example.pawel_piedel.mymovies.data.source
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
-import com.example.pawel_piedel.mymovies.local.LocalDataSource
+import com.example.pawel_piedel.mymovies.data.source.local.LocalDataSource
 import com.example.pawel_piedel.mymovies.data.source.remote.RemoteDataSource
 import io.reactivex.Flowable
 import org.junit.Before

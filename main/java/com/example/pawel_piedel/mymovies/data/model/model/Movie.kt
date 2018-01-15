@@ -1,18 +1,22 @@
 package com.example.pawel_piedel.mymovies.data.model.model
 
+import android.annotation.SuppressLint
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /**
  * Created by Pawel_Piedel on 29.10.2017.
  */
 open class Movie(
-        @PrimaryKey @SerializedName("id") var id: Int? = 0,
-        @SerializedName("production_companies") var productionCompanies: RealmList<ProductionCompany>? = RealmList<ProductionCompany>(),
-        @SerializedName("production_countries") var productionCountries: RealmList<ProductionCountry>? = RealmList<ProductionCountry>(),
-        @SerializedName("genres") var genres: RealmList<Genre>? = RealmList<Genre>(),
+        @PrimaryKey @SerializedName("id") var id: Int = 0,
+        @SerializedName("production_companies") var productionCompanies: RealmList<ProductionCompany> = RealmList<ProductionCompany>(),
+        @SerializedName("production_countries") var productionCountries: RealmList<ProductionCountry> = RealmList<ProductionCountry>(),
+        @SerializedName("genres") var genres: RealmList<Genre> = RealmList<Genre>(),
         @SerializedName("spoken_languages") var spokenLanguages: RealmList<SpokenLanguage>? = RealmList<SpokenLanguage>(),
         @SerializedName("adult") var adult: Boolean? = false,
         @SerializedName("backdrop_path") var backdropPath: String? = "",

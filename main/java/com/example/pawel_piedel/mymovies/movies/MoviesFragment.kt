@@ -1,6 +1,7 @@
 package com.example.pawel_piedel.mymovies.movies
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -14,6 +15,7 @@ import com.example.pawel_piedel.myapplication.R
 import com.example.pawel_piedel.mymovies.MyMoviesApplication
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
+import com.example.pawel_piedel.mymovies.movie_details.MovieDetailsActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -26,6 +28,7 @@ import javax.inject.Inject
  * Created by Pawel_Piedel on 07.11.2017.
  */
 class MoviesFragment : Fragment() {
+
     @Inject lateinit var moviesViewModel: MoviesViewModel
 
     lateinit var adapter: MoviesAdapter
@@ -36,7 +39,27 @@ class MoviesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        adapter = MoviesAdapter(context)
+
+        setupAdapter()
+
+        setupRecyclerView()
+    }
+
+    private fun setupAdapter() {
+        adapter = MoviesAdapter(context, object : OnItemClickListener {
+            override fun onItemClick(movieId: Int) {
+                onMovieClicked(movieId)
+            }
+        })
+    }
+
+    private fun onMovieClicked(movieId: Int) {
+        val intent = Intent(context, MovieDetailsActivity::class.java)
+        intent.putExtra(MOVIE_ID, movieId)
+        startActivity(intent)
+    }
+
+    private fun setupRecyclerView() {
         recyclerView.adapter = adapter
 
         val layoutManager = GridLayoutManager(context, 2)
@@ -51,6 +74,7 @@ class MoviesFragment : Fragment() {
 
         })
     }
+
 
     private fun loadMoreMovies() {
         subscriptions.add(moviesViewModel.loadMoreMovies(arguments.get(KEY) as MoviesCategory)
@@ -154,8 +178,9 @@ class MoviesFragment : Fragment() {
     }
 
     companion object {
-        val LOG_TAG = "Movies Fragment"
-        val KEY = "CATEGORY"
+        const val LOG_TAG = "Movies Fragment"
+        const val MOVIE_ID = "id"
+        const val KEY = "CATEGORY"
 
         fun newInstance(movieCategory: MoviesCategory): MoviesFragment {
             val fragment = MoviesFragment()

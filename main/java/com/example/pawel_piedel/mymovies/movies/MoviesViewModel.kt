@@ -1,5 +1,6 @@
 package com.example.pawel_piedel.mymovies.movies
 
+import android.util.Log
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
@@ -23,7 +24,6 @@ constructor(private val moviesRepository: MoviesRepository) {
         Timber.d("Load more movies : " + moviesCategory.name)
         return when (moviesCategory) {
             MoviesCategory.POPULAR -> {
-                popularPage++
                 loadPopularMovies(popularPage)
             }
 
@@ -43,6 +43,8 @@ constructor(private val moviesRepository: MoviesRepository) {
 
     fun loadPopularMovies(page: Int = popularPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.POPULAR, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
+            .doOnNext { popularPage++ }
+            .doOnNext { Log.d("POPULAR, page : ", "" + popularPage) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
             .doOnError { _ -> loadingIndicator.onNext(false) }
 
@@ -50,11 +52,13 @@ constructor(private val moviesRepository: MoviesRepository) {
     fun loadTopRatedMovies(page: Int = topRatedPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.TOP_RATED, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
+            .doOnNext { topRatedPage++ }
             .doOnError { _ -> loadingIndicator.onNext(false) }
 
     fun loadUpcomingMovies(page: Int = upcomingPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.UPCOMING, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
+            .doOnNext { upcomingPage++ }
             .doOnError { _ -> loadingIndicator.onNext(false) }
 
 
