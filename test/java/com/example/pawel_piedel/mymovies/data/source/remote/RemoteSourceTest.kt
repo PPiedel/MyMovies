@@ -110,7 +110,7 @@ class RemoteSourceTest {
     @Test
     fun getMovieDetailsShouldReturnCorrectResponse() {
         val testId = 1
-        `when`(remoteSource.getMovieDetails(testId)).thenReturn(Single.just(movie))
+        `when`(remoteSource.getMovieDetails(testId)).thenReturn(Flowable.just(movie))
 
         remoteSource.getMovieDetails(testId).test().assertValue(movie).assertComplete()
     }
@@ -119,7 +119,7 @@ class RemoteSourceTest {
     fun getMovieDetailsShouldReturnEmptyResponse() {
         val testId = 1
         val error = Throwable("Test error")
-        `when`(remoteSource.getMovieDetails(testId)).thenReturn(Single.error(error))
+        `when`(remoteSource.getMovieDetails(testId)).thenReturn(Flowable.error(error))
 
         remoteSource.getMovieDetails(testId).test().assertError(error)
     }
