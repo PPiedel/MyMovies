@@ -19,7 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.pawel_piedel.mymovies.movie_details.MovieDetailsActivity"></activity>
+        <activity
+            android:name="com.example.pawel_piedel.mymovies.movie_details.MovieDetailsActivity"
+            android:parentActivityName="com.example.pawel_piedel.mymovies.movies.MoviesActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pawel_piedel.mymovies.movies.MoviesActivity" />
+        </activity>
     </application>
 
 </manifest>

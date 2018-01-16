@@ -1,12 +1,10 @@
 package com.example.pawel_piedel.mymovies.movies
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -19,11 +17,7 @@ import com.example.pawel_piedel.mymovies.MyMoviesApplication
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.movie_details.MovieDetailsActivity
-import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity
-import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

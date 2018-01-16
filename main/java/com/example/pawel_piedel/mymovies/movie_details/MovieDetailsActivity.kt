@@ -1,8 +1,11 @@
 package com.example.pawel_piedel.mymovies.movie_details
 
+import android.Manifest
 import android.os.Bundle
+import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -11,6 +14,7 @@ import com.example.pawel_piedel.mymovies.MyMoviesApplication
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.source.remote.ApiService
 import com.example.pawel_piedel.mymovies.movies.MoviesFragment
+import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -44,19 +48,32 @@ class MovieDetailsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        bindMovieDetails()
+        val rxPermissions = RxPermissions(this);
+        onPermissionsAvailable(rxPermissions)
+                .subscribe {
+                    bindMovieDetails()
+                }
+
     }
+
+    private fun onPermissionsAvailable(rxPermissions: RxPermissions) =
+            rxPermissions
+                    .request(Manifest.permission.INTERNET)
 
     fun bindMovieDetails() {
         val intent = intent
         val id: Int = intent.extras.getInt(MoviesFragment.MOVIE_ID)
 
+        bindMovieDetails(id)
+
+    }
+
+    private fun bindMovieDetails(id: Int) {
         subscriptions.add(movieDetailsViewModel.loadMovieDetails(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ showMovieDetails(it) }, { error: Throwable? -> showError(error) }
                 ))
-
     }
 
     fun showMovieDetails(movie: Movie?) {
@@ -86,6 +103,18 @@ class MovieDetailsActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         subscriptions.clear()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.home -> {
+                NavUtils.navigateUpFromSameTask(this);
+                return true
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
