@@ -27,13 +27,9 @@ constructor(val realm: Realm) : LocalDataSource {
 
 
     override fun getMovies(moviesCategory: MoviesCategory, page: Int): List<Movie> {
-        Log.d("Log", "Jestem w getMovies")
         return realm.where(MoviesResponse::class.java).equalTo(PAGE, page).equalTo(CATEGORY, moviesCategory.name)
                 .findFirst()
                 ?.results?.toList().orEmpty()
-
-        // .findAll()
-        //  .flatMap { moviesResponse: MoviesResponse -> moviesResponse.results }.toList()
     }
 
 

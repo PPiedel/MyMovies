@@ -45,26 +45,26 @@ class MoviesViewModelTest {
     @Test
     fun firstLoadMorePopularMovies() {
         `when`(moviesRepository.getMovies(MoviesCategory.POPULAR, 2)).thenReturn(Flowable.just(movies))
-        viewModel.loadMoreMovies(MoviesCategory.POPULAR)
+        viewModel.loadMovies(MoviesCategory.POPULAR)
 
-        assertEquals(2, viewModel.popularPage)
+        assertEquals(2, viewModel.popularPageToLoad)
     }
 
     @Test
     fun loadMorePopularMovies() {
-        viewModel.popularPage = 9
+        viewModel.popularPageToLoad = 9
         `when`(moviesRepository.getMovies(MoviesCategory.POPULAR, 10)).thenReturn(Flowable.just(movies))
 
-        viewModel.loadMoreMovies(MoviesCategory.POPULAR)
+        viewModel.loadMovies(MoviesCategory.POPULAR)
 
-        assertEquals(10, viewModel.popularPage)
+        assertEquals(10, viewModel.popularPageToLoad)
     }
 
     @Test
     fun firstLoadMoreOfTopRatedMovies() {
         `when`(moviesRepository.getMovies(MoviesCategory.TOP_RATED, 2)).thenReturn(Flowable.just(movies))
 
-        viewModel.loadMoreMovies(MoviesCategory.TOP_RATED)
+        viewModel.loadMovies(MoviesCategory.TOP_RATED)
 
         assertEquals(2, viewModel.topRatedPage)
     }
@@ -74,7 +74,7 @@ class MoviesViewModelTest {
         viewModel.topRatedPage = 9
         `when`(moviesRepository.getMovies(MoviesCategory.TOP_RATED, 10)).thenReturn(Flowable.just(movies))
 
-        viewModel.loadMoreMovies(MoviesCategory.TOP_RATED)
+        viewModel.loadMovies(MoviesCategory.TOP_RATED)
 
         assertEquals(10, viewModel.topRatedPage)
     }
@@ -82,19 +82,19 @@ class MoviesViewModelTest {
     @Test
     fun firstLoadMoreOfUpcomingMovies() {
         `when`(moviesRepository.getMovies(MoviesCategory.UPCOMING, 2)).thenReturn(Flowable.just(movies))
-        viewModel.loadMoreMovies(MoviesCategory.UPCOMING)
+        viewModel.loadMovies(MoviesCategory.UPCOMING)
 
-        assertEquals(2, viewModel.upcomingPage)
+        assertEquals(2, viewModel.upcomingPageToLoad)
     }
 
     @Test
     fun loadMoreUpcomingMovies() {
-        viewModel.upcomingPage = 9
+        viewModel.upcomingPageToLoad = 9
         `when`(moviesRepository.getMovies(MoviesCategory.UPCOMING, 10)).thenReturn(Flowable.just(movies))
 
-        viewModel.loadMoreMovies(MoviesCategory.UPCOMING)
+        viewModel.loadMovies(MoviesCategory.UPCOMING)
 
-        assertEquals(10, viewModel.upcomingPage)
+        assertEquals(10, viewModel.upcomingPageToLoad)
     }
 
     @Test

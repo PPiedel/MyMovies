@@ -1,6 +1,5 @@
 package com.example.pawel_piedel.mymovies.movies
 
-import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
@@ -47,6 +46,13 @@ class MoviesFragment : Fragment() {
         setupAdapter()
 
         setupRecyclerView()
+
+        val rxPermissions = RxPermissions(this.activity);
+        moviesViewModel.onPermissionsAvailable(rxPermissions)
+                .subscribe {
+                    loadMovies()
+                    bindLoadingIndicator()
+                }
     }
 
     private fun setupAdapter() {
@@ -57,12 +63,6 @@ class MoviesFragment : Fragment() {
         })
     }
 
-    private fun onMovieClicked(movieId: Int) {
-        val intent = Intent(context, MovieDetailsActivity::class.java)
-        intent.putExtra(MOVIE_ID, movieId)
-        startActivity(intent)
-    }
-
     private fun setupRecyclerView() {
         recyclerView.adapter = adapter
 
@@ -70,18 +70,29 @@ class MoviesFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(GridSpacingItemDecoration(2, 4, true))
 
+        setupRecyclerViewOnLoadMore(layoutManager)
+    }
+
+    private fun onMovieClicked(movieId: Int) {
+        val intent = Intent(context, MovieDetailsActivity::class.java)
+        intent.putExtra(MOVIE_ID, movieId)
+        startActivity(intent)
+    }
+
+
+    private fun setupRecyclerViewOnLoadMore(layoutManager: GridLayoutManager) {
         recyclerView.addOnScrollListener(object : EndlessRecyclerViewScrollListener(layoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                Timber.d("On load more")
-                loadMoreMovies()
+                loadMovies(page + 1)
+                Timber.d("On load more, page : " + page)
             }
 
         })
     }
 
 
-    private fun loadMoreMovies() {
-        subscriptions.add(moviesViewModel.loadMoreMovies(arguments.get(KEY) as MoviesCategory)
+    private fun loadMovies(page: Int = 1) {
+        subscriptions.add(moviesViewModel.loadMovies(arguments.get(KEY) as MoviesCategory, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
@@ -92,53 +103,6 @@ class MoviesFragment : Fragment() {
         MyMoviesApplication[context].component.inject(this)
         return inflater?.inflate(
                 R.layout.fragment_movies, container, false)
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-
-        val rxPermissions = RxPermissions(this.activity);
-        moviesViewModel.onPermissionsAvailable(rxPermissions)
-                .subscribe {
-                    bindMovies(arguments.get(KEY) as MoviesCategory)
-                    bindLoadingIndicator()
-                }
-    }
-
-
-
-    fun bindMovies(movieCategory: MoviesCategory) {
-        when (movieCategory) {
-            MoviesCategory.POPULAR -> {
-                subscriptions.add(moviesViewModel.loadPopularMovies()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }))
-            }
-            MoviesCategory.TOP_RATED -> {
-                subscriptions.add(moviesViewModel.loadTopRatedMovies()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
-                        ))
-            }
-            MoviesCategory.UPCOMING -> {
-                subscriptions.add(moviesViewModel.loadUpcomingMovies()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
-                        ))
-            }
-            MoviesCategory.NOW_PLAYING -> {
-                subscriptions.add(moviesViewModel.loadNowPlayingMovies()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ showMovies(it) }, { t: Throwable? -> showError(t) }
-                        ))
-            }
-        }
-
     }
 
     fun bindLoadingIndicator() {

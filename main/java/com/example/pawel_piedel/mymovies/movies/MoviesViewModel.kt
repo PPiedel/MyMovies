@@ -1,7 +1,6 @@
 package com.example.pawel_piedel.mymovies.movies
 
 import android.Manifest
-import android.util.Log
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
@@ -16,63 +15,57 @@ import javax.inject.Inject
  */
 class MoviesViewModel @Inject
 constructor(private val moviesRepository: MoviesRepository) {
-    var topRatedPage = 1
-    var popularPage = 1
-    var upcomingPage = 1
-    var nowPlaying = 1
 
     val loadingIndicator: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
-    fun loadMoreMovies(moviesCategory: MoviesCategory): Flowable<List<Movie>> {
+    fun loadMovies(moviesCategory: MoviesCategory, page: Int = 1): Flowable<List<Movie>> {
         Timber.d("Load more movies : " + moviesCategory.name)
         return when (moviesCategory) {
             MoviesCategory.POPULAR -> {
-                loadPopularMovies(popularPage)
+                loadPopularMovies(page)
             }
-
             MoviesCategory.TOP_RATED -> {
-                loadTopRatedMovies(topRatedPage)
+                loadTopRatedMovies(page)
             }
             MoviesCategory.UPCOMING -> {
-                loadUpcomingMovies(upcomingPage)
+                loadUpcomingMovies(page)
             }
             MoviesCategory.NOW_PLAYING -> {
-                loadNowPlayingMovies(nowPlaying)
+                loadNowPlayingMovies(page)
             }
             else -> {
                 Flowable.empty<List<Movie>>()
             }
         }
+
     }
 
-    fun loadPopularMovies(page: Int = popularPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.POPULAR, page)
-            .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
-            .doOnNext { popularPage++ }
-            .doOnNext { Log.d("POPULAR, page : ", "" + popularPage) }
-            .doOnNext { _ -> loadingIndicator.onNext(false) }
-            .doOnError { _ -> loadingIndicator.onNext(false) }
+    fun loadPopularMovies(page: Int): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.POPULAR, page)
+                    .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
+                    .doOnNext { _ -> loadingIndicator.onNext(false) }
+                    .doOnError { _ -> loadingIndicator.onNext(false) }
+                    .doOnComplete { loadingIndicator.onNext(false) }
 
 
-    fun loadTopRatedMovies(page: Int = topRatedPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.TOP_RATED, page)
-            .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
-            .doOnNext { _ -> loadingIndicator.onNext(false) }
-            .doOnNext { topRatedPage++ }
-            .doOnError { _ -> loadingIndicator.onNext(false) }
-
-    fun loadUpcomingMovies(page: Int = upcomingPage): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.UPCOMING, page)
+    fun loadTopRatedMovies(page: Int): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.TOP_RATED, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
-            .doOnNext { upcomingPage++ }
             .doOnError { _ -> loadingIndicator.onNext(false) }
+            .doOnComplete { loadingIndicator.onNext(false) }
 
-    fun loadNowPlayingMovies(page: Int = nowPlaying): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.NOW_PLAYING, page)
+    fun loadUpcomingMovies(page: Int): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.UPCOMING, page)
             .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
             .doOnNext { _ -> loadingIndicator.onNext(false) }
-            .doOnNext { nowPlaying++ }
             .doOnError { _ -> loadingIndicator.onNext(false) }
+            .doOnComplete { loadingIndicator.onNext(false) }
 
-    fun onPermissionsAvailable(rxPermissions: RxPermissions) =
-            rxPermissions
+    fun loadNowPlayingMovies(page: Int): Flowable<List<Movie>> = moviesRepository.getMovies(MoviesCategory.NOW_PLAYING, page)
+            .doOnSubscribe { _ -> loadingIndicator.onNext(true) }
+            .doOnNext { _ -> loadingIndicator.onNext(false) }
+            .doOnError { _ -> loadingIndicator.onNext(false) }
+            .doOnComplete { loadingIndicator.onNext(false) }
+
+    fun onPermissionsAvailable(rxPermissions: RxPermissions) = rxPermissions
                     .request(Manifest.permission.INTERNET)
 
 

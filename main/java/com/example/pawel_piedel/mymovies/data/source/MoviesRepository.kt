@@ -1,5 +1,6 @@
 package com.example.pawel_piedel.mymovies.data.source
 
+import android.util.Log
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
@@ -18,8 +19,8 @@ constructor(private val remoteDataSource: RemoteDataSource, private val localDat
 
 
     override fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<List<Movie>> {
-        Timber.d("Page : " + page)
         val cache: List<Movie> = localDataSource.getMovies(moviesCategory, page)
+        //cache.iterator().forEach { movie -> Log.d("Cached movie : ",movie.toString()) }
 
         return if (cache.isEmpty()) {
             remoteDataSource.getMovies(moviesCategory, page)

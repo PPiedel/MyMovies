@@ -58,7 +58,6 @@ class MoviesAdapter(private val context: Context, private val onItemClickListene
         val releaseYear = view.releaseYear
 
         fun bindListener(movie: Movie, listener: OnItemClickListener) {
-            Log.d("MoviesAdapter", "Binded movie ; " + movie.toString())
             view.setOnClickListener({ listener.onItemClick(movie.id) })
         }
     }
