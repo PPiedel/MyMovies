@@ -6,9 +6,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,16 +99,14 @@ class MoviesFragment : Fragment() {
         super.onResume()
 
         val rxPermissions = RxPermissions(this.activity);
-        onPermissionsAvailable(rxPermissions)
+        moviesViewModel.onPermissionsAvailable(rxPermissions)
                 .subscribe {
                     bindMovies(arguments.get(KEY) as MoviesCategory)
                     bindLoadingIndicator()
                 }
     }
 
-    private fun onPermissionsAvailable(rxPermissions: RxPermissions) =
-            rxPermissions
-                    .request(Manifest.permission.INTERNET)
+
 
     fun bindMovies(movieCategory: MoviesCategory) {
         when (movieCategory) {
@@ -154,10 +154,10 @@ class MoviesFragment : Fragment() {
     }
 
 
-    fun showError(e: Throwable?) {
-        /*Timber.d(e?.message)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = EmptyRecyclerViewAdapter(getString(R.string.we_cannot_download_data))*/
+    fun showError(error: Throwable?) {
+        Log.d(LOG_TAG, error?.message)
+        val snackbar = Snackbar.make(this.activity.findViewById<View>(android.R.id.content), "Something went wrong. Please check your Internet connection.", Snackbar.LENGTH_LONG)
+        snackbar.show()
     }
 
     fun setLoadingIndicatorVisibility(visible: Boolean) = if (visible) {

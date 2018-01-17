@@ -1,9 +1,11 @@
 package com.example.pawel_piedel.mymovies.movies
 
+import android.Manifest
 import android.util.Log
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
+import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 import timber.log.Timber
@@ -68,6 +70,10 @@ constructor(private val moviesRepository: MoviesRepository) {
             .doOnNext { _ -> loadingIndicator.onNext(false) }
             .doOnNext { nowPlaying++ }
             .doOnError { _ -> loadingIndicator.onNext(false) }
+
+    fun onPermissionsAvailable(rxPermissions: RxPermissions) =
+            rxPermissions
+                    .request(Manifest.permission.INTERNET)
 
 
 }

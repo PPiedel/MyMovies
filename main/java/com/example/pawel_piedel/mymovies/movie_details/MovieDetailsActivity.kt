@@ -20,6 +20,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_details_view.*
 import javax.inject.Inject
+import android.support.design.widget.Snackbar
+import android.view.View
+
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -49,16 +52,13 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onResume()
 
         val rxPermissions = RxPermissions(this);
-        onPermissionsAvailable(rxPermissions)
+        movieDetailsViewModel.onPermissionsAvailable(rxPermissions)
                 .subscribe {
                     bindMovieDetails()
                 }
-
     }
 
-    private fun onPermissionsAvailable(rxPermissions: RxPermissions) =
-            rxPermissions
-                    .request(Manifest.permission.INTERNET)
+
 
     fun bindMovieDetails() {
         val intent = intent
@@ -98,6 +98,8 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     fun showError(error: Throwable?) {
         Log.d(LOG_TAG, error?.message)
+        val snackbar = Snackbar.make(findViewById<View>(android.R.id.content), "Something went wrong. Please check your Internet connection.", Snackbar.LENGTH_LONG)
+        snackbar.show()
     }
 
     override fun onPause() {
