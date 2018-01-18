@@ -1,34 +1,45 @@
 package com.example.pawel_piedel.mymovies.data.source
 
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
+import com.example.pawel_piedel.mymovies.data.source.local.LocalDataSource
+import com.example.pawel_piedel.mymovies.data.source.remote.RemoteDataSource
 import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
+import org.junit.runner.RunWith
+import org.junit.runners.BlockJUnit4ClassRunner
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.anyString
 import org.mockito.MockitoAnnotations
 
 /**
  * Created by Pawel_Piedel on 05.11.2017.
  */
+@RunWith(BlockJUnit4ClassRunner::class)
 internal class MoviesRepositoryTest {
 
     @Mock
     lateinit var movieResponse: MoviesResponse
 
-    @Mock
-    lateinit var remoteDataSource: MoviesDataSource
+    lateinit var testMovies: List<Movie>
 
     @Mock
-    lateinit var localDataSource: MoviesDataSource
+    lateinit var emptyMovies: List<Movie>
+
+    @Mock
+    lateinit var remoteDataSource: RemoteDataSource
+
+
+    @Mock
+    lateinit var localDataSource: LocalDataSource
 
     @Mock
     lateinit var movie: Movie
 
     lateinit var moviesRepository: MoviesRepository
+
 
     @Before
     fun setup() {
@@ -36,36 +47,27 @@ internal class MoviesRepositoryTest {
 
         moviesRepository = MoviesRepository(remoteDataSource, localDataSource)
 
-    }
-
-
-    @Test
-    fun getTopRatedMovies() {
-        `when`(remoteDataSource.getTopRatedMovies()).thenReturn(Flowable.just(movieResponse))
-
-        moviesRepository.getTopRatedMovies().test().assertValue(movieResponse)
+        testMovies = listOf(movie, movie, movie)
 
     }
 
     @Test
-    fun getUpcomingMovies() {
-        `when`(remoteDataSource.getUpcomingMovies()).thenReturn(Flowable.just(movieResponse))
+    fun repositoryShouldReturnCachedMovies() {
+        val category = MoviesCategory.POPULAR
+        val testPage = 1
+        `when`(localDataSource.getMovies(category, testPage)).thenReturn(testMovies)
 
-        moviesRepository.getUpcomingMovies().test().assertValue(movieResponse)
+        moviesRepository.getMovies(category, testPage).test().assertValue(testMovies)
     }
 
     @Test
-    fun getPopularMovies() {
-        `when`(remoteDataSource.getPopularMovies()).thenReturn(Flowable.just(movieResponse))
+    fun repositoryShouldReturnEmptyList() {
+        val category = MoviesCategory.POPULAR
+        val testPage = 1
+        `when`(localDataSource.getMovies(category, testPage)).thenReturn(emptyList())
+        `when`(remoteDataSource.getMovies(category, testPage)).thenReturn(Flowable.empty())
 
-        moviesRepository.getPopularMovies().test().assertValue(movieResponse)
-    }
-
-    @Test
-    fun getMovieDetails() {
-        `when`(remoteDataSource.getMovieDetails(ArgumentMatchers.anyString())).thenReturn(Flowable.just(movie))
-
-        moviesRepository.getMovieDetails("test").test().assertValue(movie)
+        moviesRepository.getMovies(category, testPage).test().assertEmpty()
     }
 
 }

@@ -3,9 +3,8 @@ package com.example.pawel_piedel.mymovies.data.source.remote
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
-import com.example.pawel_piedel.mymovies.data.source.MoviesDataSource
 import io.reactivex.Flowable
-import io.reactivex.Single
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -14,11 +13,13 @@ import javax.inject.Inject
 class RemoteSource @Inject
 constructor(private val apiService: ApiService) : RemoteDataSource {
 
-    override fun getMovies(moviesCategory: MoviesCategory): Flowable<MoviesResponse> {
+    override fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<MoviesResponse> {
+        Timber.d("Metoda getMovies ")
         return when (moviesCategory) {
-            MoviesCategory.TOP_RATED -> getTopRatedMovies()
-            MoviesCategory.POPULAR -> getPopularMovies()
-            MoviesCategory.UPCOMING -> getUpcomingMovies()
+            MoviesCategory.TOP_RATED -> getTopRatedMovies(page)
+            MoviesCategory.POPULAR -> getPopularMovies(page)
+            MoviesCategory.UPCOMING -> getUpcomingMovies(page)
+            MoviesCategory.NOW_PLAYING -> getNowPlayingMovies(page)
             else -> {
                 Flowable.empty<MoviesResponse>()
             }
@@ -26,19 +27,24 @@ constructor(private val apiService: ApiService) : RemoteDataSource {
     }
 
 
-    private fun getTopRatedMovies(): Flowable<MoviesResponse> {
-        return apiService.getTopRatedMovies()
+    fun getTopRatedMovies(page: Int): Flowable<MoviesResponse> {
+        return apiService.getTopRatedMovies(page)
     }
 
-    private fun getUpcomingMovies(): Flowable<MoviesResponse> {
-        return apiService.getUpcomingMovies()
+    fun getUpcomingMovies(page: Int): Flowable<MoviesResponse> {
+        return apiService.getUpcomingMovies(page)
     }
 
-    private fun getPopularMovies(): Flowable<MoviesResponse> {
-        return apiService.getPopularMovies()
+    fun getPopularMovies(page: Int): Flowable<MoviesResponse> {
+        Timber.d("getPopularMovies")
+        return apiService.getPopularMovies(page)
     }
 
-    override fun getMovieDetails(id: Int): Single<Movie> {
+    fun getNowPlayingMovies(page: Int): Flowable<MoviesResponse> {
+        return apiService.getNowPlayingMovies(page)
+    }
+
+    override fun getMovieDetails(id: Int): Flowable<Movie> {
         return apiService.getMovieDetails(id)
     }
 }

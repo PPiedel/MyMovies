@@ -21,15 +21,21 @@ class MoviesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupToolbar()
+
         setupTabs()
 
     }
 
-    private fun setupTabs() {
+    private fun setupToolbar(){
         setSupportActionBar(toolbar)
+    }
+
+    private fun setupTabs() {
         tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.POPULAR), getString(R.string.popular))
         tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.TOP_RATED), getString(R.string.top_rated))
         tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.UPCOMING), getString(R.string.upcoming))
+        tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.NOW_PLAYING),getString(R.string.now_playing))
         viewpager.adapter = tabsPagerAdapter
         tabs.setupWithViewPager(viewpager)
     }

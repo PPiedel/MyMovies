@@ -4,7 +4,6 @@ import com.example.pawel_piedel.myapplication.BuildConfig
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesResponse
 import io.reactivex.Flowable
-import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,9 +13,10 @@ import retrofit2.http.Query
  */
 
 interface ApiService {
+
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path(MOVIE_ID) id: Int,
-                        @Query(API_KEY_PARAM) apiKey: String = API_KEY): Single<Movie>
+                        @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<Movie>
 
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovies(@Path(MOVIE_ID) id: String,
@@ -26,19 +26,24 @@ interface ApiService {
     fun getRecomendedMovies(@Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(@Query(LANGUAGE) lang: String = "en",
+    fun getTopRatedMovies(@Query(PAGE) page: Int,
+                          @Query(LANGUAGE) lang: String = "en",
                           @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/upcoming")
-    fun getUpcomingMovies(@Query(LANGUAGE) lang: String = "en",
+    fun getUpcomingMovies(@Query(PAGE) page: Int,
+                          @Query(LANGUAGE) lang: String = "en",
                           @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/popular")
-    fun getPopularMovies(@Query(LANGUAGE) lang: String = "en",
+    fun getPopularMovies(@Query(PAGE) page: Int,
+                         @Query(LANGUAGE) lang: String = "en",
                          @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     @GET("movie/now_playing")
-    fun getNowPlayingMovies(@Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
+    fun getNowPlayingMovies(@Query(PAGE) page: Int,
+                            @Query(LANGUAGE) lang: String = "en",
+                            @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
     companion object {
         const val BASE_URL = "https://api.themoviedb.org/3/"
