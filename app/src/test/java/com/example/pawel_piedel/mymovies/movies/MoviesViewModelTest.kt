@@ -1,119 +1,123 @@
 package com.example.pawel_piedel.mymovies.movies
 
+import android.Manifest
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
 import com.example.pawel_piedel.mymovies.data.source.MoviesRepository
+import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Flowable
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Before
+import io.reactivex.Observable
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.BlockJUnit4ClassRunner
+
+import org.junit.Assert.*
+import org.junit.Before
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 /**
- * Created by Pawel_Piedel on 11.12.2017.
+ * Created by ppiedel on 19.01.18.
  */
-@RunWith(BlockJUnit4ClassRunner::class)
 class MoviesViewModelTest {
 
     @Mock
-    lateinit var moviesRepository: MoviesRepository
+    lateinit var moviesRepository  : MoviesRepository
 
     @Mock
-    lateinit var movie: Movie
+    lateinit var testMovies : List<Movie>
 
     @Mock
-    lateinit var movies: List<Movie>
+    lateinit var rxPermissions : RxPermissions
 
-    lateinit var viewModel: MoviesViewModel
-
-    val testPage = 1
+    lateinit var viewModel : MoviesViewModel
 
     @Before
-    fun setup() {
+    fun  init(){
         MockitoAnnotations.initMocks(this)
+
         viewModel = MoviesViewModel(moviesRepository)
-
-        assertNotNull(viewModel.loadingIndicator)
-
     }
 
     @Test
-    fun firstLoadMorePopularMovies() {
-        `when`(moviesRepository.getMovies(MoviesCategory.POPULAR, 2)).thenReturn(Flowable.just(movies))
-        viewModel.loadMovies(MoviesCategory.POPULAR)
+    fun loadMoviesShouldReturnEmptyValue() {
+        val category = MoviesCategory.DEFAULT
+        val testPage = 1
+        `when`(moviesRepository.getMovies(category,testPage)).thenReturn(Flowable.just(testMovies))
 
-        assertEquals(2, viewModel.popularPageToLoad)
+
+        viewModel.loadMovies(category,testPage).test().assertNoValues()
     }
 
     @Test
-    fun loadMorePopularMovies() {
-        viewModel.popularPageToLoad = 9
-        `when`(moviesRepository.getMovies(MoviesCategory.POPULAR, 10)).thenReturn(Flowable.just(movies))
+    fun loadMoviesShouldReturnCorrectResult() {
+        val category = MoviesCategory.POPULAR
+        val testPage = 1
+        `when`(moviesRepository.getMovies(category,testPage)).thenReturn(Flowable.just(testMovies))
 
-        viewModel.loadMovies(MoviesCategory.POPULAR)
 
-        assertEquals(10, viewModel.popularPageToLoad)
-    }
-
-    @Test
-    fun firstLoadMoreOfTopRatedMovies() {
-        `when`(moviesRepository.getMovies(MoviesCategory.TOP_RATED, 2)).thenReturn(Flowable.just(movies))
-
-        viewModel.loadMovies(MoviesCategory.TOP_RATED)
-
-        assertEquals(2, viewModel.topRatedPage)
-    }
-
-    @Test
-    fun loadMoreTopRatedMovies() {
-        viewModel.topRatedPage = 9
-        `when`(moviesRepository.getMovies(MoviesCategory.TOP_RATED, 10)).thenReturn(Flowable.just(movies))
-
-        viewModel.loadMovies(MoviesCategory.TOP_RATED)
-
-        assertEquals(10, viewModel.topRatedPage)
-    }
-
-    @Test
-    fun firstLoadMoreOfUpcomingMovies() {
-        `when`(moviesRepository.getMovies(MoviesCategory.UPCOMING, 2)).thenReturn(Flowable.just(movies))
-        viewModel.loadMovies(MoviesCategory.UPCOMING)
-
-        assertEquals(2, viewModel.upcomingPageToLoad)
-    }
-
-    @Test
-    fun loadMoreUpcomingMovies() {
-        viewModel.upcomingPageToLoad = 9
-        `when`(moviesRepository.getMovies(MoviesCategory.UPCOMING, 10)).thenReturn(Flowable.just(movies))
-
-        viewModel.loadMovies(MoviesCategory.UPCOMING)
-
-        assertEquals(10, viewModel.upcomingPageToLoad)
+        viewModel.loadMovies(category,testPage).test().assertValue(testMovies)
     }
 
     @Test
     fun loadPopularMovies() {
-        `when`(moviesRepository.getMovies(MoviesCategory.POPULAR, testPage)).thenReturn(Flowable.just(movies))
-        viewModel.loadPopularMovies(testPage).test().assertResult(movies)
+        val category = MoviesCategory.POPULAR
+        val testPage = 1
+
+        `when`(moviesRepository.getMovies(category,testPage)).thenReturn(Flowable.just(testMovies))
+
+
+        viewModel.loadMovies(category,testPage).test().assertValue(testMovies)
     }
 
     @Test
     fun loadTopRatedMovies() {
-        `when`(moviesRepository.getMovies(MoviesCategory.TOP_RATED, testPage)).thenReturn(Flowable.just(movies))
-        viewModel.loadTopRatedMovies(testPage).test().assertResult(movies)
+        val category = MoviesCategory.TOP_RATED
+        val testPage = 1
+
+        `when`(moviesRepository.getMovies(category,testPage)).thenReturn(Flowable.just(testMovies))
+
+
+        viewModel.loadMovies(category,testPage).test().assertValue(testMovies)
     }
 
     @Test
     fun loadUpcomingMovies() {
-        `when`(moviesRepository.getMovies(MoviesCategory.UPCOMING, testPage)).thenReturn(Flowable.just(movies))
-        viewModel.loadUpcomingMovies(testPage).test().assertResult(movies)
+        val category = MoviesCategory.UPCOMING
+        val testPage = 1
 
+        `when`(moviesRepository.getMovies(category,testPage)).thenReturn(Flowable.just(testMovies))
+
+
+        viewModel.loadMovies(category,testPage).test().assertValue(testMovies)
+    }
+
+    @Test
+    fun loadNowPlayingMovies() {
+        val category = MoviesCategory.NOW_PLAYING
+        val testPage = 1
+
+        `when`(moviesRepository.getMovies(category,testPage)).thenReturn(Flowable.just(testMovies))
+
+
+        viewModel.loadMovies(category,testPage).test().assertValue(testMovies)
+    }
+
+    @Test
+    fun onPermissionsAvailableShouldReturnTrue() {
+        val permission = Manifest.permission.INTERNET
+        val permissionGranted = true
+        `when`(rxPermissions.request(permission)).thenReturn(Observable.just(permissionGranted))
+
+        viewModel.onPermissionsAvailable(rxPermissions).test().assertValue(permissionGranted)
+    }
+
+    @Test
+    fun onPermissionsAvailableShouldReturnFalse() {
+        val permission = Manifest.permission.INTERNET
+        val permissionGranted = false
+        `when`(rxPermissions.request(permission)).thenReturn(Observable.just(permissionGranted))
+
+        viewModel.onPermissionsAvailable(rxPermissions).test().assertValue(permissionGranted)
     }
 
 }
