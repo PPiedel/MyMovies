@@ -1,13 +1,20 @@
 package com.example.pawel_piedel.mymovies.movies
 
+import android.app.SearchManager
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
+import android.view.Menu
+import android.view.MenuItem
 import com.example.pawel_piedel.myapplication.R
 import com.example.pawel_piedel.mymovies.data.model.model.MoviesCategory
+import com.example.pawel_piedel.mymovies.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 
 class MoviesActivity : AppCompatActivity() {
@@ -27,7 +34,8 @@ class MoviesActivity : AppCompatActivity() {
 
     }
 
-    private fun setupToolbar(){
+
+    private fun setupToolbar() {
         setSupportActionBar(toolbar)
     }
 
@@ -35,9 +43,44 @@ class MoviesActivity : AppCompatActivity() {
         tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.POPULAR), getString(R.string.popular))
         tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.TOP_RATED), getString(R.string.top_rated))
         tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.UPCOMING), getString(R.string.upcoming))
-        tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.NOW_PLAYING),getString(R.string.now_playing))
+        tabsPagerAdapter.addFragment(MoviesFragment.newInstance(MoviesCategory.NOW_PLAYING), getString(R.string.now_playing))
         viewpager.adapter = tabsPagerAdapter
         tabs.setupWithViewPager(viewpager)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_movies, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.search -> {
+                val searchView: SearchView = item.actionView as SearchView
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        val intent = Intent(searchView.context, SearchActivity::class.java)
+                        intent.action = Intent.ACTION_SEARCH
+                        intent.putExtra(SearchManager.QUERY, query)
+                        startActivity(intent)
+                        return false
+                    }
+
+                    override fun onQueryTextChange(s: String): Boolean {
+                        return false
+                    }
+                })
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+                true
+            }
+        }
+    }
+
+    fun showSearchFragment() {
+        Timber.d("Search fragment showed.")
     }
 
 

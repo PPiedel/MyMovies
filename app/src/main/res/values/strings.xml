@@ -10,4 +10,7 @@
     <string name="try_again">Check your Internet connection and try again.</string>
     <string name="calendar_icon">Calendar icon</string>
     <string name="now_playing">Now Playing</string>
+    <string name="search">Search</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="search_hint">Type to search...</string>
 </resources>
