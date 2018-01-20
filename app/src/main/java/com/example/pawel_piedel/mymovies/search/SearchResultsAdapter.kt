@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.pawel_piedel.myapplication.R
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import com.example.pawel_piedel.mymovies.movies.OnItemClickListener
 import kotlinx.android.synthetic.main.search_item.view.*
 
 /**
  * Created by PPiedel on 20.01.2018.
  */
-class SearchResultsAdapter(private val context: Context) : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
+class SearchResultsAdapter(private val context: Context, private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
     private var movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,9 +28,10 @@ class SearchResultsAdapter(private val context: Context) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = movies[position].title
+        holder.bindListener(movies[position], onItemClickListener)
     }
 
-    fun addNewMovies(newMovies: List<Movie>) {
+    fun addNewResults(newMovies: List<Movie>) {
         movies.clear()
         movies.addAll(newMovies)
         notifyDataSetChanged()
@@ -37,7 +39,11 @@ class SearchResultsAdapter(private val context: Context) : RecyclerView.Adapter<
 
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val title = view.searcgResultTitle
+        val title = view.searchResultTitle
+
+        fun bindListener(movie: Movie, listener: OnItemClickListener) {
+            view.setOnClickListener({ listener.onItemClick(movie.id) })
+        }
     }
 
 }

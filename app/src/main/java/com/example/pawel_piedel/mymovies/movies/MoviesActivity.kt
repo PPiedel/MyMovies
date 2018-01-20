@@ -56,9 +56,7 @@ class MoviesActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.search -> {
-                val searchView: SearchView = item.actionView as SearchView
-                val intent = Intent(searchView.context, SearchActivity::class.java)
-                startActivity(intent)
+                startSearchActivity()
                 true
             }
             else -> {
@@ -66,6 +64,11 @@ class MoviesActivity : AppCompatActivity() {
                 true
             }
         }
+    }
+
+    private fun startSearchActivity() {
+        val intent = Intent(this, SearchActivity::class.java)
+        startActivity(intent)
     }
 
     inner class TabsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
