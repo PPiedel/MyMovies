@@ -45,6 +45,10 @@ interface ApiService {
                             @Query(LANGUAGE) lang: String = "en",
                             @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
 
+    @GET("search/movie")
+    fun searchMovies(@Query(QUERY_PARAM) query: String,
+                     @Query(API_KEY_PARAM) apiKey: String = API_KEY): Flowable<MoviesResponse>
+
     companion object {
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
@@ -53,6 +57,7 @@ interface ApiService {
         const val LANGUAGE = "language"
         const val MOVIE_ID = "movie_id"
         const val PAGE = "page"
+        const val QUERY_PARAM = "query"
 
     }
 

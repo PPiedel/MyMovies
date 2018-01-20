@@ -1,35 +1,67 @@
 package com.example.pawel_piedel.mymovies.search
 
-import android.app.ListActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import com.example.pawel_piedel.myapplication.R
-import android.app.SearchManager
-import android.content.Intent
-import timber.log.Timber
+import com.example.pawel_piedel.mymovies.MyMoviesApplication
+import com.example.pawel_piedel.mymovies.data.model.model.Movie
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_search.*
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-
-class SearchActivity : ListActivity() {
+class SearchActivity : AppCompatActivity() {
+    private val subscriptions = CompositeDisposable()
+    private lateinit var adapter: SearchResultsAdapter
+    @Inject lateinit var searchViewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search);
 
-        handleIntent(intent);
+        MyMoviesApplication[applicationContext].component.inject(this)
+
+        adapter = SearchResultsAdapter(this)
+        searchResultsRecyclerView.adapter = adapter
+        searchResultsRecyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 
-    override fun onNewIntent(intent: Intent) {
-        setIntent(intent)
-        handleIntent(intent)
+    override fun onResume() {
+        super.onResume()
+        observeSearchView()
     }
 
-    private fun handleIntent(intent: Intent) {
-        if (Intent.ACTION_SEARCH == intent.action) {
-            val query = intent.getStringExtra(SearchManager.QUERY)
-            searchForResults(query)
-        }
+    fun observeSearchView() {
+        RxSearch.fromSearchView(searchView)
+                .filter { query -> query.length > 1 }
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { query: String ->
+                    performSearch(query)
+
+                }
     }
 
-    fun searchForResults(query: String) {
-        Timber.d("Search for results with query : $query")
+    fun performSearch(query: String) {
+        subscriptions.add(
+                searchViewModel.loadSearchResults(query)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { movies -> showMovies(movies) }
+        )
+    }
+
+    fun showMovies(movies: List<Movie>) {
+        adapter.addNewMovies(movies)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        subscriptions.clear()
+
     }
 }

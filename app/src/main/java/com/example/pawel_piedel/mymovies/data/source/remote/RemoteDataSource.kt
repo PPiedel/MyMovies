@@ -14,4 +14,6 @@ interface RemoteDataSource {
     fun getMovies(moviesCategory: MoviesCategory, page : Int): Flowable<MoviesResponse>
 
     fun  getMovieDetails(id: Int): Flowable<Movie>
+
+    fun loadSearchResults(query : String) : Flowable<MoviesResponse>
 }

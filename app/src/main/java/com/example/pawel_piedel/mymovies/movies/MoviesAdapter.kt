@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.item_movie.view.*
  */
 class MoviesAdapter(private val context: Context, private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
-    var movies: MutableList<Movie> = mutableListOf()
+    private var movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -51,8 +51,7 @@ class MoviesAdapter(private val context: Context, private val onItemClickListene
         notifyDataSetChanged()
     }
 
-    class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-
+    inner class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val image = view.thumbnail
         val title = view.title
         val releaseYear = view.releaseYear

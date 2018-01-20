@@ -6,6 +6,7 @@ import com.example.pawel_piedel.mymovies.injection.module.DataModule
 import com.example.pawel_piedel.mymovies.injection.module.ViewModelModule
 import com.example.pawel_piedel.mymovies.movie_details.MovieDetailsActivity
 import com.example.pawel_piedel.mymovies.movies.MoviesFragment
+import com.example.pawel_piedel.mymovies.search.SearchActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,4 +16,6 @@ interface AppComponent {
     fun inject(moviesFragment: MoviesFragment)
 
     fun inject(movieDetailsActivity: MovieDetailsActivity)
+
+    fun inject(searchActivity: SearchActivity)
 }

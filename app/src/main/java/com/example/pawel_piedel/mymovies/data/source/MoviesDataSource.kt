@@ -14,4 +14,6 @@ interface MoviesDataSource {
 
     fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<List<Movie>>
 
+    fun loadSearchResults(query: String): Flowable<List<Movie>>
+
 }

@@ -13,6 +13,10 @@ import javax.inject.Inject
 class RemoteSource @Inject
 constructor(private val apiService: ApiService) : RemoteDataSource {
 
+    override fun loadSearchResults(query: String) : Flowable<MoviesResponse> {
+        return apiService.searchMovies(query)
+    }
+
     override fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<MoviesResponse> {
         Timber.d("Metoda getMovies ")
         return when (moviesCategory) {

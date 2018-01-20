@@ -31,14 +31,10 @@ import javax.inject.Inject
  * Created by Pawel_Piedel on 07.11.2017.
  */
 class MoviesFragment : Fragment() {
-
     @Inject lateinit var moviesViewModel: MoviesViewModel
-
-    lateinit var adapter: MoviesAdapter
-
-    var progressDialog: ProgressDialog? = null
-
-    var subscriptions: CompositeDisposable = CompositeDisposable()
+    private lateinit var adapter: MoviesAdapter
+    private var progressDialog: ProgressDialog? = null
+    private var subscriptions: CompositeDisposable = CompositeDisposable()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

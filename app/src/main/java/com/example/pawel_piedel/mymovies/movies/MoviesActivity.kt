@@ -57,19 +57,8 @@ class MoviesActivity : AppCompatActivity() {
         return when (item?.itemId) {
             R.id.search -> {
                 val searchView: SearchView = item.actionView as SearchView
-                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String): Boolean {
-                        val intent = Intent(searchView.context, SearchActivity::class.java)
-                        intent.action = Intent.ACTION_SEARCH
-                        intent.putExtra(SearchManager.QUERY, query)
-                        startActivity(intent)
-                        return false
-                    }
-
-                    override fun onQueryTextChange(s: String): Boolean {
-                        return false
-                    }
-                })
+                val intent = Intent(searchView.context, SearchActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> {
@@ -78,11 +67,6 @@ class MoviesActivity : AppCompatActivity() {
             }
         }
     }
-
-    fun showSearchFragment() {
-        Timber.d("Search fragment showed.")
-    }
-
 
     inner class TabsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         private var fragments: MutableList<Pair<Fragment, String>> = ArrayList()

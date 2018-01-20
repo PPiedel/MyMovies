@@ -17,7 +17,6 @@ import javax.inject.Inject
 class MoviesRepository @Inject
 constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource) : MoviesDataSource {
 
-
     override fun getMovies(moviesCategory: MoviesCategory, page: Int): Flowable<List<Movie>> {
         val cache: List<Movie> = localDataSource.getMovies(moviesCategory, page)
         //cache.iterator().forEach { movie -> Log.d("Cached movie : ",movie.toString()) }
@@ -34,8 +33,12 @@ constructor(private val remoteDataSource: RemoteDataSource, private val localDat
         }
     }
 
-
     override fun getMovieDetails(id: Int): Flowable<Movie> {
         return remoteDataSource.getMovieDetails(id)
+    }
+
+    override fun loadSearchResults(query: String): Flowable<List<Movie>> {
+        return remoteDataSource.loadSearchResults(query)
+                .map { response: MoviesResponse -> response.results }
     }
 }
