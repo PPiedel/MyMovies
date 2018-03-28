@@ -52,11 +52,12 @@ class MoviesFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        adapter = MoviesAdapter(context, object : OnItemClickListener {
-            override fun onItemClick(movieId: Int) {
-                onMovieClicked(movieId)
-            }
-        })
+        adapter = MoviesAdapter(context)
+        adapter.itemClickStream
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { id -> onMovieClicked(id) }
+
     }
 
     private fun setupRecyclerView() {
