@@ -20,13 +20,7 @@ import org.mockito.MockitoAnnotations
 @RunWith(BlockJUnit4ClassRunner::class)
 internal class MoviesRepositoryTest {
 
-    @Mock
-    lateinit var movieResponse: MoviesResponse
-
     lateinit var testMovies: List<Movie>
-
-    @Mock
-    lateinit var emptyMovies: List<Movie>
 
     @Mock
     lateinit var remoteDataSource: RemoteDataSource
