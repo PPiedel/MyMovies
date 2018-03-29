@@ -1,8 +1,8 @@
 # MyMovies
-Kotlin mobile app written with the us of MVVM pattern. TMDb API REST client. 
+Kotlin Android app written with the usage of MVVM pattern. TMDb API REST client. 
 
 
-#Features : 
+# Features : 
 - movies list (top rated, popular, upcoming, now playing)
 - movie details
 
