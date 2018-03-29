@@ -41,12 +41,11 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        adapter = SearchResultsAdapter(this, object : OnItemClickListener {
-            override fun onItemClick(movieId: Int) {
-                Timber.d("On movie search result clicked.")
-                startDetailsActivity(movieId)
-            }
-        })
+        adapter = SearchResultsAdapter(this)
+        adapter.searchIdStream
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { movieId -> startDetailsActivity(movieId) }
     }
 
     fun startDetailsActivity(movieId: Int) {

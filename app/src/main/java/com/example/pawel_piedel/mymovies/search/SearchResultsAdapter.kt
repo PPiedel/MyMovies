@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import com.example.pawel_piedel.myapplication.R
 import com.example.pawel_piedel.mymovies.data.model.model.Movie
 import com.example.pawel_piedel.mymovies.movies.OnItemClickListener
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.search_item.view.*
 
 /**
  * Created by PPiedel on 20.01.2018.
  */
-class SearchResultsAdapter(private val context: Context, private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
+class SearchResultsAdapter(private val context: Context) : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
+    public val searchIdStream : PublishSubject<Int> = PublishSubject.create();
     private var movies: MutableList<Movie> = mutableListOf()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -28,7 +31,6 @@ class SearchResultsAdapter(private val context: Context, private val onItemClick
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = movies[position].title
-        holder.bindListener(movies[position], onItemClickListener)
     }
 
     fun addNewResults(newMovies: List<Movie>) {
@@ -40,6 +42,10 @@ class SearchResultsAdapter(private val context: Context, private val onItemClick
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val title = view.searchResultTitle
+
+        init {
+            view.setOnClickListener { v -> searchIdStream.onNext(movies[layoutPosition].id) };
+        }
 
         fun bindListener(movie: Movie, listener: OnItemClickListener) {
             view.setOnClickListener({ listener.onItemClick(movie.id) })
